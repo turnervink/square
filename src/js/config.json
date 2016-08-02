@@ -1,0 +1,267 @@
+[
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 1,
+        "id": "main-heading",
+        "defaultValue": "Square"
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "weather-heading",
+        "defaultValue": "Weather"
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "localization-heading",
+        "label": "Language",
+        "defaultValue": "Language"
+      },
+      {
+        "type": "select",
+        "messageKey": "CfgKeyLanguage",
+        "defaultValue": "0",
+        "options": [
+          {
+            "label": "English",
+            "value": "0"
+          },
+          {
+            "label": "Français",
+            "value": "1"
+          },
+          {
+            "label": "Español",
+            "value": "2"
+          },
+          {
+            "label": "Deutsch",
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyEuropeanDate",
+        "label": "European Date (Thu 23 Jun)",
+        "defaultValue": false
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "bluetooth-heading",
+        "defaultValue": "Bluetooth"
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "appearance-heading",
+        "defaultValue": "Appearance"
+      },
+      {
+				"type": "color",
+				"messageKey": "CfgKeyBackgroundColour",
+				"defaultValue": "000000",
+				"label": "Background colour",
+				"sunlight": true
+			},
+			{
+				"type": "color",
+				"messageKey": "CfgKeyTextColour",
+				"defaultValue": "00ff00",
+				"label": "Text colour",
+				"sunlight": true
+			}
+    ],
+    "capabilities": ["COLOR"]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "aplite-appearance-heading",
+        "defaultValue": "Appearance"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyInvertColours",
+        "label": "Invert Colours",
+        "defaultValue": false
+      }
+    ],
+    "capabilities": ["BW"]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "middle-bar-heading",
+        "defaultValue": "Middle Bar"
+      },
+      {
+        "type": "select",
+        "messageKey": "CfgKeyMiddleBarMode",
+        "label": "Middle bar shows:",
+        "defaultValue": "1",
+        "options": [
+          {
+            "value": "0",
+            "label": "Static bar"
+          },
+          {
+            "value": "1",
+            "label": "Battery level"
+          },
+          {
+            "value": "2",
+            "label": "Step goal progress"
+          }
+        ]
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyUseAutomaticStepGoal",
+        "label": "Use automatic goal",
+        "description": "Automatic goal is based on the previous day's steps",
+        "defaultValue": true
+      },
+      {
+        "type": "slider",
+        "messageKey": "CfgKeyManualStepGoal",
+        "label": "Step goal",
+        "min": 1000,
+        "max": 10000,
+        "step": 1000,
+        "defaultValue": 10000
+      }
+    ],
+    "capabilities": ["HEALTH"]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "aplite-middle-bar-heading",
+        "defaultValue": "Middle Bar"
+      },
+      {
+        "type": "select",
+        "messageKey": "CfgKeyMiddleBarMode",
+        "label": "Middle bar shows:",
+        "defaultValue": "1",
+        "options": [
+          {
+            "value": "0",
+            "label": "Static bar"
+          },
+          {
+            "value": "1",
+            "label": "Battery level"
+          }
+        ]
+      }
+    ],
+    "capabilities": ["BW"]
+  },
+
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
+        "size": 4,
+        "id": "night-mode-heading",
+        "defaultValue": "Night Mode"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyUseNightMode",
+        "label": "Use Night Mode",
+        "defaultValue": false
+      },
+      {
+        "type": "input",
+        "messageKey": "CfgKeyNightModeStart",
+        "defaultValue": 20,
+        "label": "Night Mode Start Hour (0 - 24)",
+				"attributes": {
+					"limit": 2,
+					"type": "number",
+					"min": 0,
+					"max": 24
+				}
+      },
+      {
+        "type": "input",
+        "messageKey": "CfgKeyNightModeEnd",
+        "defaultValue": 20,
+        "label": "Night Mode End Hour (0 - 24)",
+				"attributes": {
+					"limit": 2,
+					"type": "number",
+					"min": 0,
+					"max": 24
+				}
+      },
+      {
+				"type": "color",
+				"messageKey": "CfgKeyNightBackgroundColour",
+				"defaultValue": "000000",
+				"label": "Background colour",
+				"sunlight": true
+			},
+			{
+				"type": "color",
+				"messageKey": "CfgKeyNightTextColour",
+				"defaultValue": "00ff00",
+				"label": "Text colour",
+				"sunlight": true
+			}
+    ],
+    "capabilities": ["COLOR"]
+  },
+
+
+
+  {
+    "type": "submit",
+    "defaultValue": "Save"
+  }
+]

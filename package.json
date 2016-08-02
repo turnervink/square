@@ -1,0 +1,76 @@
+{
+  "name": "square_redux",
+  "author": "Turner Vink",
+  "version": "1.0.0",
+  "keywords": [
+    "pebble-app"
+  ],
+  "private": true,
+  "dependencies": {
+    "pebble-clay": "^1.0.1"
+  },
+  "pebble": {
+    "displayName": "Square Redux",
+    "uuid": "9ba3db50-2597-40f4-9ff3-2c05a3b31f7d",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk"
+    ],
+    "capabilities": [
+      "configurable",
+      "health"
+    ],
+    "watchapp": {
+      "watchface": true
+    },
+    "messageKeys": [
+      "CfgKeyTemperature",
+      "CfgKeyCelsiusTemperature",
+      "CfgKeyConditions",
+      "CfgKeyLanguage",
+      "CfgKeyEuropeanDate",
+      "CfgKeyBackgroundColour",
+      "CfgKeyTextColour",
+      "CfgKeyInvertColours",
+      "CfgKeyMiddleBarMode",
+      "CfgKeyUseAutomaticStepGoal",
+      "CfgKeyManualStepGoal",
+      "CfgKeyUseNightMode",
+      "CfgKeyNightModeStart",
+      "CfgKeyNightModeEnd",
+      "CfgKeyNightBackgroundColour",
+      "CfgKeyNightTextColour"
+    ],
+    "resources": {
+      "media": [
+        {
+          "characterRegex": "[0-9:A-Za-z ]",
+          "file": "fonts/Square.ttf",
+          "name": "FONT_SQUARE_50",
+          "type": "font"
+        },
+        {
+          "characterRegex": "[0-9:A-Za-z ]",
+          "file": "fonts/Square.ttf",
+          "name": "FONT_SQUARE_26",
+          "type": "font"
+        },
+        {
+          "characterRegex": "[0-9:A-Za-z° ]",
+          "file": "fonts/Square.ttf",
+          "name": "FONT_SQUARE_14",
+          "type": "font"
+        },
+        {
+          "characterRegex": "[0-9:A-Za-z° ]",
+          "file": "fonts/Square.ttf",
+          "name": "FONT_SQUARE_18",
+          "type": "font"
+        }
+      ]
+    }
+  }
+}
