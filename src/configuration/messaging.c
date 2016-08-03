@@ -4,9 +4,12 @@
 #include "colours.h"
 #include "../main_window.h"
 #include "../weather/weather.h"
+#include "../lang/lang.h"
 
 static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Received messageKeys");
+
+  bool weather_needs_update = true;
 
   Tuple *t = dict_read_first(iter);
   while(t) {
@@ -16,21 +19,25 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     if (true_key == CfgKeyTemperature) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Fahrenheit");
       snprintf(temp_buffer, sizeof(temp_buffer), "%d°", (int)t->value->int32);
+      weather_needs_update = false;
     }
 
     if (true_key == CfgKeyCelsiusTemperature) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Celsius");
       snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%d°", (int)t->value->int32);
+      weather_needs_update = false;
     }
 
     if (true_key == CfgKeyConditions) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received conditions");
       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
+      weather_needs_update = false;
     }
 
     // Since some of the keys aren't booleans, we check for them here and deal with them accordingly
     if (true_key == CfgKeyLanguage) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting language");
+      last_language = language;
       language = atoi(t->value->cstring);
     }
 
@@ -85,6 +92,9 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   // Then update everything that needs updating
   update_colours();
   update_time();
+  if (weather_needs_update) { // If this is false is that the only time we need to display_weather? Would save doing that every time we receive appmessages
+    update_weather();
+  }
   display_weather();
   layer_mark_dirty(middle_bar_layer);
 }

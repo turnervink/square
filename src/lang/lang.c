@@ -16,3 +16,11 @@ const char* monthNames[4][12] = {
 	{"ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SET", "OCT", "NOV", "DIC"},
 	{"JAN", "FEB", "MÄR", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"}
 };
+
+bool language_changed(int old, int new) {
+	if (old != new) {
+		return true;
+	} else {
+		return false;
+	}
+}

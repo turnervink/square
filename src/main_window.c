@@ -3,6 +3,7 @@
 #include "middle_bar.h"
 #include "configuration/settings.h"
 #include "lang/lang.h"
+#include "weather/weather.h"
 
 Window *main_window;
 TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer;
@@ -18,7 +19,7 @@ void size_time_layers() {
   layer_set_frame(text_layer_get_layer(time_layer), GRect(0, ((bounds.size.h / 2) + 5 - time_size.h), bounds.size.w, time_size.h));
 
   GSize date_size = text_layer_get_content_size(date_layer);
-  layer_set_frame(text_layer_get_layer(date_layer), GRect(0, (bounds.size.h / 2) + 5, bounds.size.w, bounds.size.h));
+  layer_set_frame(text_layer_get_layer(date_layer), GRect(0, (bounds.size.h / 2) + 5, bounds.size.w, date_size.h));
 }
 
 void update_time() {
@@ -81,17 +82,18 @@ static void main_window_load(Window *window) {
 	GSize date_size = text_layer_get_content_size(date_layer);
 	GRect date_frame = layer_get_frame(text_layer_get_layer(date_layer));
 
-  temperature_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y, 0), 144, 18));
+  temperature_layer = text_layer_create(GRect(0, 0, 144, 168));
   text_layer_set_background_color(temperature_layer, GColorClear);
   text_layer_set_text_alignment(temperature_layer, GTextAlignmentCenter);
   text_layer_set_font(temperature_layer, sm_weather_font);
-  text_layer_set_text(temperature_layer, "24°");
+  //text_layer_set_text(temperature_layer, "24°");
 
-  conditions_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y, bounds.size.h), 144, 18));
+  conditions_layer = text_layer_create(GRect(0, 0, 144, 168));
+  text_layer_set_overflow_mode(conditions_layer, GTextOverflowModeWordWrap);
   text_layer_set_background_color(conditions_layer, GColorClear);
   text_layer_set_text_alignment(conditions_layer, GTextAlignmentCenter);
   text_layer_set_font(conditions_layer, sm_weather_font);
-  text_layer_set_text(conditions_layer, "few clouds");
+  //text_layer_set_text(conditions_layer, "few clouds");
 
   layer_add_child(window_layer, text_layer_get_layer(time_layer));
   layer_add_child(window_layer, text_layer_get_layer(date_layer));

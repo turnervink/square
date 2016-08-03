@@ -27,7 +27,7 @@ typedef enum {
 // Define ints for non-bool settings
 int background_colour, text_colour, night_background_colour, night_text_colour;
 int night_start_hour, night_end_hour;
-int language;
+int last_language, language;
 int middle_bar_mode;
 int manual_step_goal;
 
