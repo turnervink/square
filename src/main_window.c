@@ -1,5 +1,6 @@
 #include <pebble.h>
 #include "main_window.h"
+#include "middle_bar.h"
 #include "configuration/settings.h"
 #include "lang/lang.h"
 
@@ -76,19 +77,17 @@ static void main_window_load(Window *window) {
   middle_bar_layer = layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
   layer_set_update_proc(middle_bar_layer, middle_bar_update_proc);
 
-  // Weather layers
-
   GRect time_frame = layer_get_frame(text_layer_get_layer(time_layer));
-	GRect date_frame = layer_get_frame(text_layer_get_layer(date_layer));
 	GSize date_size = text_layer_get_content_size(date_layer);
+	GRect date_frame = layer_get_frame(text_layer_get_layer(date_layer));
 
-  temperature_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - 5, 0), 144, 18));
+  temperature_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y, 0), 144, 18));
   text_layer_set_background_color(temperature_layer, GColorClear);
   text_layer_set_text_alignment(temperature_layer, GTextAlignmentCenter);
   text_layer_set_font(temperature_layer, sm_weather_font);
   text_layer_set_text(temperature_layer, "24°");
 
-  conditions_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h + 5, bounds.size.h - 18), 144, 18));
+  conditions_layer = text_layer_create(GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y, bounds.size.h), 144, 18));
   text_layer_set_background_color(conditions_layer, GColorClear);
   text_layer_set_text_alignment(conditions_layer, GTextAlignmentCenter);
   text_layer_set_font(conditions_layer, sm_weather_font);

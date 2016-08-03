@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "messaging.h"
 #include "settings.h"
+#include "colours.h"
 #include "../main_window.h"
 #include "../weather/weather.h"
 
@@ -84,6 +85,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   // Then update everything that needs updating
   update_colours();
   update_time();
+  display_weather();
   layer_mark_dirty(middle_bar_layer);
 }
 
