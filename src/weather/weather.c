@@ -12,7 +12,7 @@ void update_weather() {
 	DictionaryIterator *iter;
 	app_message_outbox_begin(&iter);
 
-	dict_write_uint8(iter, 0, 0);
+	dict_write_uint8(iter, MESSAGE_KEY_CfgKeyConditions, 0);
 	app_message_outbox_send();
 }
 

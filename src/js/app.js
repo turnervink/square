@@ -100,7 +100,19 @@ Pebble.addEventListener('webviewclosed', function(e) {
 
   var messageKeys = require("message_keys");
   lang = dict[messageKeys.CfgKeyLanguage];
-  console.log("Lang " + lang);
+  console.log("Lang is " + lang);
+
+  if (lang === "0") {
+    lang = "en"
+  } else if (lang === "1") {
+    lang = "fr"
+  } else if (lang === "2") {
+    lang = "es"
+  } else if (lang === "3") {
+    lang = "de"
+  }
+
+  localStorage.lang = lang;
 
   // Send settings values to watch side
   Pebble.sendAppMessage(dict,
@@ -119,6 +131,8 @@ Pebble.addEventListener('webviewclosed', function(e) {
 Pebble.addEventListener("ready", function(e) {
   console.log("PebbleKit JS Ready!");
 
+  lang = localStorage.lang;
+
 	getWeather(); // Get weather on launch
 });
 
@@ -128,9 +142,8 @@ Pebble.addEventListener("appmessage", function (e) {
 	console.log('Message contents: ' + JSON.stringify(e.payload));
 
 	var messageContents = e.payload;
-	console.log(messageContents.CfgKeyConditions);
 
-	if (messageContents.CfgKeyConditions === 0) { // If KEY_CONDITIONS exists in the appmessage NOTE: We are gettings key 0, check for that
+	if (messageContents.CfgKeyConditions === 0) { // If CfgKeyConditions exists in the message update the weather
 		console.log('CfgKeyConditions received in appmessage');
 		getWeather(); // Fetch the weather
 	}
