@@ -4,22 +4,24 @@
 
 typedef enum {
   // Numbered items are exceptions (non-bool)
-  CfgKeyTemperature, // 0
-  CfgKeyCelsiusTemperature, // 1
-  CfgKeyConditions, // 2
-  CfgKeyLanguage, // 3
+  CfgKeyTemperature,
+  CfgKeyCelsiusTemperature,
+  CfgKeyConditions,
+  CfgKeyWeatherMode, // 3
+  CfgKeyLanguage, // 4
   CfgKeyEuropeanDate,
-  CfgKeyBackgroundColour,  // 5
-  CfgKeyTextColour, // 6
+  CfgKeyBackgroundColour,  // 6
+  CfgKeyTextColour, // 7
   CfgKeyInvertColours,
-  CfgKeyMiddleBarMode, // 8
+  CfgKeyMiddleBarMode, // 9
   CfgKeyUseAutomaticStepGoal,
-  CfgKeyManualStepGoal, // 10
+  CfgKeyManualStepGoal, // 11
   CfgKeyUseNightMode,
-  CfgKeyNightModeStart, // 12
-  CfgKeyNightModeEnd, // 13
-  CfgKeyNightBackgroundColour,  // 14
-  CfgKeyNightTextColour,  // 15
+  CfgKeyNightModeStart, // 13
+  CfgKeyNightModeEnd, // 14
+  CfgKeyNightBackgroundColour,  // 15
+  CfgKeyNightTextColour,  // 16
+
 
   CfgKeyCount,
 } CfgKey;
@@ -30,6 +32,7 @@ int night_start_hour, night_end_hour;
 int last_language, language;
 int middle_bar_mode;
 int manual_step_goal;
+int weather_mode;
 
 void parse_settings(int key, bool value);
 bool get_settings(int key);

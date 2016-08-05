@@ -30,6 +30,7 @@
       "CfgKeyTemperature",
       "CfgKeyCelsiusTemperature",
       "CfgKeyConditions",
+      "CfgKeyWeatherMode",
       "CfgKeyLanguage",
       "CfgKeyEuropeanDate",
       "CfgKeyBackgroundColour",

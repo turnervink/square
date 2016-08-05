@@ -8,16 +8,17 @@
 
 static bool config_settings[CfgKeyCount];
 
-static int config_exceptions[9] = {
+static int config_exceptions[10] = {
   3,
-  5,
+  4,
   6,
-  8,
-  10,
-  12,
+  7,
+  9,
+  11,
   13,
   14,
-  15
+  15,
+  16
 };
 
 static int weather_keys[3] = {
@@ -74,6 +75,11 @@ void save_settings() {
   for (int i = 0; i < CfgKeyCount; i++) {
     /* Save each config option, with exceptions for non-bool values
     NOTE: We still save every array element even if it's non-bool to keep the count correct */
+
+    if (i == CfgKeyWeatherMode) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for weather_mode", weather_mode);
+      persist_write_int(MESSAGE_KEY_CfgKeyWeatherMode, weather_mode);
+    }
 
     if (i == CfgKeyLanguage) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for language");
@@ -145,6 +151,7 @@ void load_settings() {
     night_end_hour = 7;
     night_background_colour = 0x000000;
     night_text_colour = 0xFFFFFF;
+    weather_mode = 0;
   } else {
     // Load stored settings
     APP_LOG(APP_LOG_LEVEL_INFO, "Loading saved settings");
@@ -152,6 +159,12 @@ void load_settings() {
     for (int i = 0; i < CfgKeyCount; i++) {
 
       // Load exceptions first
+      if (i== CfgKeyWeatherMode) {
+
+        weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for weather_mode", weather_mode);
+      }
+      
       if (i == CfgKeyLanguage) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for language");
         language = persist_read_int(MESSAGE_KEY_CfgKeyLanguage);

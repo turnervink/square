@@ -85,14 +85,14 @@ static void main_window_load(Window *window) {
   temperature_layer = text_layer_create(GRect(0, 0, 144, 168));
   text_layer_set_background_color(temperature_layer, GColorClear);
   text_layer_set_text_alignment(temperature_layer, GTextAlignmentCenter);
-  text_layer_set_font(temperature_layer, sm_weather_font);
+  text_layer_set_font(temperature_layer, lg_weather_font);
   //text_layer_set_text(temperature_layer, "24°");
 
   conditions_layer = text_layer_create(GRect(0, 0, 144, 168));
   text_layer_set_overflow_mode(conditions_layer, GTextOverflowModeWordWrap);
   text_layer_set_background_color(conditions_layer, GColorClear);
   text_layer_set_text_alignment(conditions_layer, GTextAlignmentCenter);
-  text_layer_set_font(conditions_layer, sm_weather_font);
+  text_layer_set_font(conditions_layer, lg_weather_font);
   //text_layer_set_text(conditions_layer, "few clouds");
 
   layer_add_child(window_layer, text_layer_get_layer(time_layer));

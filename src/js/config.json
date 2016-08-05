@@ -19,6 +19,26 @@
         "size": 4,
         "id": "weather-heading",
         "defaultValue": "Weather"
+      },
+      {
+        "type": "select",
+        "messageKey": "CfgKeyWeatherMode",
+        "label": "Weather:",
+        "defaultValue": "0",
+        "options": [
+          {
+            "label": "Always show",
+            "value": "0"
+          },
+          {
+            "label": "Shake to show",
+            "value": "1"
+          },
+          {
+            "label": "Hide",
+            "value": "2"
+          }
+        ]
       }
     ]
   },

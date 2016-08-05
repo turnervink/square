@@ -39,6 +39,12 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     }
 
     // Since some of the keys aren't booleans, we check for them here and deal with them accordingly
+    if (true_key == CfgKeyWeatherMode) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
+      weather_mode = t->value->int32;
+      position_weather_layers(weather_mode);
+    }
+
     if (true_key == CfgKeyLanguage) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting language");
 
