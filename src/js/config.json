@@ -27,12 +27,8 @@
         "defaultValue": "0",
         "options": [
           {
-            "label": "Always show",
+            "label": "Show",
             "value": "0"
-          },
-          {
-            "label": "Shake to show",
-            "value": "1"
           },
           {
             "label": "Hide",
