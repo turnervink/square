@@ -35,6 +35,16 @@
             "value": "2"
           }
         ]
+      },
+      {
+        "type": "input",
+        "messageKey": "CfgKeyWeatherLocation",
+        "label": "Location:",
+        "description": "Leave blank to use GPS",
+        "defaultValue": "",
+        "attributes": {
+          "placeholder": "Vancouver"
+        }
       }
     ]
   },

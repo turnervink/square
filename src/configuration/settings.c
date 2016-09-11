@@ -18,7 +18,8 @@ static int config_exceptions[10] = {
   13,
   14,
   15,
-  16
+  16,
+  17
 };
 
 static int weather_keys[3] = {
@@ -79,6 +80,11 @@ void save_settings() {
     if (i == CfgKeyWeatherMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for weather_mode", weather_mode);
       persist_write_int(MESSAGE_KEY_CfgKeyWeatherMode, weather_mode);
+    }
+
+    if (i == CfgKeyWeatherLocation) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving fake value for weather_location");
+      persist_write_int(MESSAGE_KEY_CfgKeyWeatherLocation, 0);
     }
 
     if (i == CfgKeyLanguage) {
@@ -164,7 +170,7 @@ void load_settings() {
         weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for weather_mode", weather_mode);
       }
-      
+
       if (i == CfgKeyLanguage) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for language");
         language = persist_read_int(MESSAGE_KEY_CfgKeyLanguage);

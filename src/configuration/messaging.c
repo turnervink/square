@@ -41,7 +41,17 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     // Since some of the keys aren't booleans, we check for them here and deal with them accordingly
     if (true_key == CfgKeyWeatherMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
+
+      //last_weather_mode = weather_mode;
       weather_mode = atoi(t->value->cstring);
+
+      if (weather_mode == 0) {
+        weather_needs_update = true;
+      }
+    }
+
+    if (true_key == CfgKeyWeatherLocation) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Received weather_location");
     }
 
     if (true_key == CfgKeyLanguage) {
