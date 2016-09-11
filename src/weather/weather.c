@@ -8,13 +8,17 @@ char conditions_buffer[100];
 // TODO Size these buffers properly
 
 void update_weather() {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Requesting weather update");
+  if (weather_mode == 0) { // If displaying weather, fetch it
+    APP_LOG(APP_LOG_LEVEL_INFO, "Requesting weather update");
 
-	DictionaryIterator *iter;
-	app_message_outbox_begin(&iter);
+  	DictionaryIterator *iter;
+  	app_message_outbox_begin(&iter);
 
-	dict_write_uint8(iter, MESSAGE_KEY_CfgKeyConditions, 0);
-	app_message_outbox_send();
+  	dict_write_uint8(iter, MESSAGE_KEY_CfgKeyConditions, 0);
+  	app_message_outbox_send();
+  } else { // Else don't fetch it
+    APP_LOG(APP_LOG_LEVEL_INFO, "Weather was requested but is hidden, not fetching");
+  }
 }
 
 void display_weather() {
