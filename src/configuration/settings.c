@@ -8,7 +8,7 @@
 
 static bool config_settings[CfgKeyCount];
 
-static int config_exceptions[10] = {
+static int config_exceptions[11] = {
   3,
   4,
   6,

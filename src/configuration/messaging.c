@@ -65,6 +65,15 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       }
     }
 
+    /*#ifdef PBL_BW
+      background_colour = 0;
+      text_colour = 0;
+      night_start_hour = 0;
+      night_end_hour = 0;
+      night_background_colour = 0;
+      night_text_color = 0;
+    #endif*/
+
     if (true_key == CfgKeyBackgroundColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting background_colour");
       background_colour = t->value->int32;

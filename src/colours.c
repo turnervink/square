@@ -80,11 +80,15 @@ void update_colours() {
   if (get_settings(CfgKeyInvertColours)) {
     text_layer_set_text_color(time_layer, GColorBlack);
     text_layer_set_text_color(date_layer, GColorBlack);
+    text_layer_set_text_color(temperature_layer, GColorBlack);
+    text_layer_set_text_color(conditions_layer, GColorBlack);
 
     window_set_background_color(main_window, GColorWhite);
   } else {
     text_layer_set_text_color(time_layer, GColorWhite);
     text_layer_set_text_color(date_layer, GColorWhite);
+    text_layer_set_text_color(temperature_layer, GColorWhite);
+    text_layer_set_text_color(conditions_layer, GColorWhite);
 
     window_set_background_color(main_window, GColorBlack);
   }

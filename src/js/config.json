@@ -126,8 +126,8 @@
 				"label": "Text colour",
 				"sunlight": true
 			}
-    ],
-    "capabilities": ["COLOR"]
+    ]
+
   },
 
   {
@@ -145,8 +145,8 @@
         "label": "Invert Colours",
         "defaultValue": false
       }
-    ],
-    "capabilities": ["BW"]
+    ]
+
   },
 
   {
@@ -194,8 +194,8 @@
         "step": 1000,
         "defaultValue": 10000
       }
-    ],
-    "capabilities": ["HEALTH"]
+    ]
+
   },
 
   {
@@ -223,8 +223,8 @@
           }
         ]
       }
-    ],
-    "capabilities": ["BW"]
+    ]
+
   },
 
   {
@@ -280,8 +280,8 @@
 				"label": "Text colour",
 				"sunlight": true
 			}
-    ],
-    "capabilities": ["COLOR"]
+    ]
+
   },
 
 
