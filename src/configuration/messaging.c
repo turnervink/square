@@ -65,14 +65,10 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       }
     }
 
-    /*#ifdef PBL_BW
-      background_colour = 0;
-      text_colour = 0;
-      night_start_hour = 0;
-      night_end_hour = 0;
-      night_background_colour = 0;
-      night_text_color = 0;
-    #endif*/
+    if (true_key == CfgKeyEuropeanDate) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting euro_date");
+      euro_date = t->value->int32;
+    }
 
     if (true_key == CfgKeyBackgroundColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting background_colour");
@@ -84,14 +80,29 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       text_colour = t->value->int32;
     }
 
+    if (true_key == CfgKeyInvertColours) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting inv_colours");
+      inv_colours = t->value->int32;
+    }
+
     if (true_key == CfgKeyMiddleBarMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting middle_bar_mode");
       middle_bar_mode = atoi(t->value->cstring);
     }
 
+    if (true_key == CfgKeyUseAutomaticStepGoal) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting auto_step_goal");
+      auto_step_goal = t->value->int32;
+    }
+
     if (true_key == CfgKeyManualStepGoal) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting manual_step_goal");
       manual_step_goal = t->value->int32;
+    }
+
+    if (true_key == CfgKeyUseNightMode) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting use_night_mode");
+      use_night_mode = t->value->int32;
     }
 
     if (true_key == CfgKeyNightModeStart) {
@@ -114,8 +125,8 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       night_text_colour = t->value->int32;
     }
 
-    // We want the config array to stay the correct size, so we still parse every setting
-    parse_settings(true_key, t->value->int32);
+    /* We want the config array to stay the correct size, so we still parse every setting
+    parse_settings(true_key, t->value->int32);*/
     t = dict_read_next(iter);
   }
 
@@ -137,5 +148,5 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
 
 void init_messaging() {
   app_message_register_inbox_received(inbox_recv_handler); // TO DO: Other handlers for dropped msgs, etc
-  app_message_open(128, 128); // TO DO: Calculate buffer based on array size
+  app_message_open(256, 256); // TO DO: Calculate buffer based on array size
 }

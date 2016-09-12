@@ -120,7 +120,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
     	console.log("ACK config settings");
   	},
 		function(e) {
-    	console.log('NACK config settings');
+    	console.log('NACK config settings: ' + JSON.stringify(e));
   	}
 	);
 });

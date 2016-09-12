@@ -1,4 +1,4 @@
 #pragma once
 
-bool use_night_mode();
+bool in_night_range();
 void update_colours();

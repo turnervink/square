@@ -92,14 +92,29 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyLanguage, language);
     }
 
+    if (i == CfgKeyEuropeanDate) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for euro_date");
+      persist_write_int(MESSAGE_KEY_CfgKeyEuropeanDate, euro_date);
+    }
+
     if (i == CfgKeyTextColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for text_colour", text_colour);
       persist_write_int(MESSAGE_KEY_CfgKeyTextColour, text_colour);
     }
 
+    if (i == CfgKeyInvertColours) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for inv_colours");
+      persist_write_int(MESSAGE_KEY_CfgKeyInvertColours, inv_colours);
+    }
+
     if (i == CfgKeyMiddleBarMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for middle_bar_mode");
       persist_write_int(MESSAGE_KEY_CfgKeyMiddleBarMode, middle_bar_mode);
+    }
+
+    if (i == CfgKeyUseAutomaticStepGoal) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for auto_step_goal");
+      persist_write_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal, auto_step_goal);
     }
 
     if (i == CfgKeyBackgroundColour) {
@@ -110,6 +125,11 @@ void save_settings() {
     if (i == CfgKeyManualStepGoal) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for manual_step_goal");
       persist_write_int(MESSAGE_KEY_CfgKeyManualStepGoal, manual_step_goal);
+    }
+
+    if (i == CfgKeyUseNightMode) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for use_night_mode");
+      persist_write_int(MESSAGE_KEY_CfgKeyUseNightMode, use_night_mode);
     }
 
     if (i == CfgKeyNightModeStart) {
@@ -123,9 +143,9 @@ void save_settings() {
     }
 
     // Don't show we're saving the dummy array elements in the logs
-    if (!is_exception(i)) {
+    /*if (!is_exception(i)) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving setting %d with value of %d", i, config_settings[i]);
-    }
+    }*/
 
     if (i == CfgKeyNightTextColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_text_colour", night_text_colour);
@@ -138,7 +158,7 @@ void save_settings() {
     }
 
     // Save bool options
-    persist_write_bool(i, config_settings[i]);
+    //persist_write_bool(i, config_settings[i]);
   }
 }
 
@@ -150,9 +170,10 @@ void load_settings() {
     language = 0;
     background_colour = 0x000000;
     text_colour = 0x00ff00;
+    euro_date = 0;
     middle_bar_mode = 1;
-    config_settings[CfgKeyInvertColours] = 0;
-    config_settings[CfgKeyUseNightMode] = 0;
+    inv_colours = 0;
+    use_night_mode = 0;
     night_start_hour = 20;
     night_end_hour = 7;
     night_background_colour = 0x000000;
@@ -176,15 +197,30 @@ void load_settings() {
         language = persist_read_int(MESSAGE_KEY_CfgKeyLanguage);
       }
 
+      if (i == CfgKeyEuropeanDate) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for euro_date");
+        euro_date = persist_read_int(MESSAGE_KEY_CfgKeyEuropeanDate);
+      }
+
       if (i == CfgKeyTextColour) {
 
         text_colour = persist_read_int(MESSAGE_KEY_CfgKeyTextColour);
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored of %d value for text_colour", text_colour);
       }
 
+      if (i == CfgKeyInvertColours) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for inv_colours");
+        inv_colours = persist_read_int(MESSAGE_KEY_CfgKeyInvertColours);
+      }
+
       if (i == CfgKeyMiddleBarMode) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for middle_bar_mode");
         middle_bar_mode = persist_read_int(MESSAGE_KEY_CfgKeyMiddleBarMode);
+      }
+
+      if (i == CfgKeyUseAutomaticStepGoal) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for auto_step_goal");
+        auto_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal);
       }
 
       if (i == CfgKeyBackgroundColour) {
@@ -196,6 +232,11 @@ void load_settings() {
       if (i == CfgKeyManualStepGoal) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for manual_step_goal");
         manual_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyManualStepGoal);
+      }
+
+      if (i == CfgKeyUseNightMode) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for use_night_mode");
+        use_night_mode = persist_read_int(MESSAGE_KEY_CfgKeyUseNightMode);
       }
 
       if (i == CfgKeyNightModeStart) {
@@ -221,12 +262,12 @@ void load_settings() {
       }
 
       // Then load bool options
-      config_settings[i] = persist_read_bool(i);
+      //config_settings[i] = persist_read_bool(i);
 
       // Don't show we're loading the stored dummy array elements in the logs
-      if (!is_exception(i)) {
+      /*if (!is_exception(i)) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded setting %d with value of %d", i, persist_read_bool(i));
-      }
+      }*/
     }
   }
 }

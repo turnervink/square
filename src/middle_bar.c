@@ -33,13 +33,13 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
 
   // Pick the correct colour based on night mode/invert setting
   #ifdef PBL_COLOR
-  if (use_night_mode()) {
+  if (in_night_range()) {
     graphics_context_set_fill_color(ctx, GColorFromHEX(night_text_colour));
   } else {
     graphics_context_set_fill_color(ctx, GColorFromHEX(text_colour));
   }
   #else
-  if (get_settings(CfgKeyInvertColours)) {
+  if (inv_colours == 1) {
     graphics_context_set_fill_color(ctx, GColorBlack);
   } else {
     graphics_context_set_fill_color(ctx, GColorWhite);
@@ -71,7 +71,7 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
     int px_per_step_manual = manual_step_goal / 140; // Divide goal by full bar width
     int px_per_step_auto = steps_average / 140;
 
-    if (get_settings(CfgKeyUseAutomaticStepGoal)) {
+    if (auto_step_goal == 1) {
       graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_auto, 2), 0, GCornerNone); // Draw steps bar
     } else {
       graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_manual, 2), 0, GCornerNone); // Draw steps bar

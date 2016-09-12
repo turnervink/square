@@ -3,12 +3,12 @@
 #include "configuration/settings.h"
 #include "logs.h"
 
-bool use_night_mode() {
+bool in_night_range() {
   time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	int cur_hour = tick_time->tm_hour;
 
-  if (get_settings(CfgKeyUseNightMode)) {
+  if (use_night_mode == 1) {
     #ifdef SHOW_COLOURS_LOGS
     APP_LOG(APP_LOG_LEVEL_INFO, "CfgKeyUseNightMode is true");
     #endif
@@ -57,7 +57,7 @@ bool use_night_mode() {
 void update_colours() {
   #ifdef PBL_COLOR
 
-  if (use_night_mode()) {
+  if (in_night_range()) {
     // Use night mode colours
     text_layer_set_text_color(time_layer, GColorFromHEX(night_text_colour));
     text_layer_set_text_color(date_layer, GColorFromHEX(night_text_colour));
@@ -77,7 +77,7 @@ void update_colours() {
 
   #else
 
-  if (get_settings(CfgKeyInvertColours)) {
+  if (inv_colours == 1) {
     text_layer_set_text_color(time_layer, GColorBlack);
     text_layer_set_text_color(date_layer, GColorBlack);
     text_layer_set_text_color(temperature_layer, GColorBlack);

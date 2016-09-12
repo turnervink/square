@@ -42,7 +42,7 @@ void update_time() {
 	int weekday = tick_time->tm_wday;
   strftime(date_num_buffer, sizeof("DD"), "%d", tick_time);
 
-  if (get_settings(CfgKeyEuropeanDate)) {
+  if (euro_date == 1) {
     snprintf(full_date_buffer, sizeof(full_date_buffer), "%s %s %s", dayNames[language][weekday], date_num_buffer, monthNames[language][month]);
   } else {
     snprintf(full_date_buffer, sizeof(full_date_buffer), "%s %s %s", dayNames[language][weekday], monthNames[language][month], date_num_buffer);
