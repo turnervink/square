@@ -6,6 +6,7 @@ var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 // ---------- Weather ---------- //
 
 var lang;
+var location;
 
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
@@ -18,11 +19,18 @@ var xhrRequest = function (url, type, callback) {
 
 function locationSuccess(pos) {
   // Construct URL
-  url;
-  var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=2874bea34ea1f91820fa07af69939eea&lang=' + lang;
 
-  console.log("Lat is " + pos.coords.latitude);
-  console.log("Lon is " + pos.coords.longitude);
+  if (location != '') {
+    console.log("Fetching weather with manual location")
+    console.log("Location is " + location);
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=2874bea34ea1f91820fa07af69939eea&lang=' + lang;
+  } else {
+    console.log("Fetching weather with GPS location");
+    console.log("Lat is " + pos.coords.latitude);
+    console.log("Lon is " + pos.coords.longitude);
+    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=2874bea34ea1f91820fa07af69939eea&lang=' + lang;
+  }
+
   console.log('URL is ' + url);
 
   // Send request to OpenWeatherMap
@@ -102,6 +110,9 @@ Pebble.addEventListener('webviewclosed', function(e) {
   lang = dict[messageKeys.CfgKeyLanguage];
   console.log("Lang is " + lang);
 
+  location = dict[messageKeys.CfgKeyWeatherLocation];
+  console.log("Location is " + location);
+
   if (lang === "0") {
     lang = "en"
   } else if (lang === "1") {
@@ -113,6 +124,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
   }
 
   localStorage.lang = lang;
+  localStorage.location = location;
 
   // Send settings values to watch side
   Pebble.sendAppMessage(dict,
@@ -132,6 +144,11 @@ Pebble.addEventListener("ready", function(e) {
   console.log("PebbleKit JS Ready!");
 
   lang = localStorage.lang;
+  if (localStorage.getItem("location") !== null) {
+    location = localStorage.location;
+  } else {
+    location = '';
+  }
 
 	getWeather(); // Get weather on launch
 });
