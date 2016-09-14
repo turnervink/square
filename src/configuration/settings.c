@@ -6,8 +6,6 @@
 
 #define STORED_SETTINGS 5555
 
-int show_seconds = 1;
-
 /*static bool config_settings[CfgKeyCount];
 
 static int config_exceptions[11] = {
@@ -119,6 +117,11 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyInvertColours, inv_colours);
     }
 
+    if (i == CfgKeyShowSeconds) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for show_seconds");
+      persist_write_int(MESSAGE_KEY_CfgKeyShowSeconds, show_seconds);
+    }
+
     if (i == CfgKeyMiddleBarMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for middle_bar_mode");
       persist_write_int(MESSAGE_KEY_CfgKeyMiddleBarMode, middle_bar_mode);
@@ -185,6 +188,7 @@ void load_settings() {
     euro_date = 0;
     middle_bar_mode = 1;
     inv_colours = 0;
+    show_seconds = 0;
     use_night_mode = 0;
     night_start_hour = 20;
     night_end_hour = 7;
@@ -233,6 +237,11 @@ void load_settings() {
       if (i == CfgKeyInvertColours) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for inv_colours");
         inv_colours = persist_read_int(MESSAGE_KEY_CfgKeyInvertColours);
+      }
+
+      if (i == CfgKeyShowSeconds) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for show_seconds");
+        show_seconds = persist_read_int(MESSAGE_KEY_CfgKeyShowSeconds);
       }
 
       if (i == CfgKeyMiddleBarMode) {

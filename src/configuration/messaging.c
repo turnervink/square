@@ -95,6 +95,11 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       inv_colours = t->value->int32;
     }
 
+    if (true_key == CfgKeyShowSeconds) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting show_seconds");
+      show_seconds = t->value->int32;
+    }
+
     if (true_key == CfgKeyMiddleBarMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting middle_bar_mode");
       middle_bar_mode = atoi(t->value->cstring);
@@ -146,6 +151,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   // Then update everything that needs updating
   update_colours();
   update_time();
+  size_time_layers();
 
   if (weather_needs_update) { // If this is false is that the only time we need to display_weather? Would save doing that every time we receive appmessages
     update_weather();
