@@ -107,6 +107,11 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyVibeOnConnect, vibe_connect);
     }
 
+    if (i == CfgKeyBackgroundColour) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for background_colour", background_colour);
+      persist_write_int(MESSAGE_KEY_CfgKeyBackgroundColour, background_colour);
+    }
+
     if (i == CfgKeyTextColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for text_colour", text_colour);
       persist_write_int(MESSAGE_KEY_CfgKeyTextColour, text_colour);
@@ -130,11 +135,6 @@ void save_settings() {
     if (i == CfgKeyUseAutomaticStepGoal) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for auto_step_goal");
       persist_write_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal, auto_step_goal);
-    }
-
-    if (i == CfgKeyBackgroundColour) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for background_colour", background_colour);
-      persist_write_int(MESSAGE_KEY_CfgKeyBackgroundColour, background_colour);
     }
 
     if (i == CfgKeyManualStepGoal) {
@@ -162,14 +162,14 @@ void save_settings() {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving setting %d with value of %d", i, config_settings[i]);
     }*/
 
-    if (i == CfgKeyNightTextColour) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_text_colour", night_text_colour);
-      persist_write_int(MESSAGE_KEY_CfgKeyNightTextColour, night_text_colour);
-    }
-
     if (i == CfgKeyNightBackgroundColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_background_colour", night_background_colour);
       persist_write_int(MESSAGE_KEY_CfgKeyNightBackgroundColour, night_background_colour);
+    }
+
+    if (i == CfgKeyNightTextColour) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_text_colour", night_text_colour);
+      persist_write_int(MESSAGE_KEY_CfgKeyNightTextColour, night_text_colour);
     }
 
     // Save bool options
@@ -182,19 +182,22 @@ void load_settings() {
     // Set default settings
     APP_LOG(APP_LOG_LEVEL_INFO, "Setting default settings");
 
+    weather_mode = 0;
     language = 0;
+    euro_date = 0;
+    vibe_disconnect = 1;
+    vibe_connect = 1;
     background_colour = 0x000000;
     text_colour = 0x00ff00;
-    euro_date = 0;
-    middle_bar_mode = 1;
     inv_colours = 0;
     show_seconds = 0;
+    middle_bar_mode = 1;
+    auto_step_goal = 1;
     use_night_mode = 0;
     night_start_hour = 20;
     night_end_hour = 7;
     night_background_colour = 0x000000;
     night_text_colour = 0xFFFFFF;
-    weather_mode = 0;
   } else {
     // Load stored settings
     APP_LOG(APP_LOG_LEVEL_INFO, "Loading saved settings");
@@ -203,7 +206,6 @@ void load_settings() {
 
       // Load exceptions first
       if (i== CfgKeyWeatherMode) {
-
         weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for weather_mode", weather_mode);
       }
@@ -228,8 +230,12 @@ void load_settings() {
         vibe_connect = persist_read_int(MESSAGE_KEY_CfgKeyVibeOnConnect);
       }
 
-      if (i == CfgKeyTextColour) {
+      if (i == CfgKeyBackgroundColour) {
+        background_colour = persist_read_int(MESSAGE_KEY_CfgKeyBackgroundColour);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for background_colour", background_colour);
+      }
 
+      if (i == CfgKeyTextColour) {
         text_colour = persist_read_int(MESSAGE_KEY_CfgKeyTextColour);
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored of %d value for text_colour", text_colour);
       }
@@ -254,12 +260,6 @@ void load_settings() {
         auto_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal);
       }
 
-      if (i == CfgKeyBackgroundColour) {
-
-        background_colour = persist_read_int(MESSAGE_KEY_CfgKeyBackgroundColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for background_colour", background_colour);
-      }
-
       if (i == CfgKeyManualStepGoal) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for manual_step_goal");
         manual_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyManualStepGoal);
@@ -280,16 +280,14 @@ void load_settings() {
         night_end_hour = persist_read_int(MESSAGE_KEY_CfgKeyNightModeEnd);
       }
 
-      if (i == CfgKeyNightTextColour) {
-
-        night_text_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightTextColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_text_colour", night_text_colour);
-      }
-
       if (i == CfgKeyNightBackgroundColour) {
-
         night_background_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightBackgroundColour);
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_background_colour", night_background_colour);
+      }
+
+      if (i == CfgKeyNightTextColour) {
+        night_text_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightTextColour);
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_text_colour", night_text_colour);
       }
 
       // Then load bool options
