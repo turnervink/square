@@ -4,6 +4,7 @@
 #include "configuration/settings.h"
 #include "middle_bar.h"
 #include "weather/weather.h"
+#include "bluetooth/bluetooth.h"
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
@@ -16,6 +17,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 static void init() {
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
   battery_state_service_subscribe(battery_handler);
+  bluetooth_connection_service_subscribe(bluetooth_handler);
 
   #ifdef PBL_HEALTH
   health_service_events_subscribe(health_handler, NULL);
