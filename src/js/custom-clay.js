@@ -19,6 +19,7 @@ module.exports = function(minified) {
       clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
     } else {
       console.log("Not showing step goal");
+      stepGoalSlider.call(clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal"));
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
       clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
     }
