@@ -6,6 +6,8 @@
 
 #define STORED_SETTINGS 5555
 
+int show_seconds = 1;
+
 /*static bool config_settings[CfgKeyCount];
 
 static int config_exceptions[11] = {

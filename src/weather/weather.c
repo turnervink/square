@@ -43,7 +43,16 @@ void display_weather() {
   APP_LOG(APP_LOG_LEVEL_INFO, "Temp height: %d", temperature_size.h);
   APP_LOG(APP_LOG_LEVEL_INFO, "Conditions height: %d", conditions_size.h);
 
-  layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + 10, 0), 144, temperature_size.h));
+  #ifdef PBL_ROUND
+  int round_temp_offset;
+  if (show_seconds == 1) {
+    round_temp_offset = 5;
+  } else {
+    round_temp_offset = 10;
+  }
+  #endif
+
+  layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + round_temp_offset, 0), 144, temperature_size.h));
   layer_set_frame(text_layer_get_layer(conditions_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h));
 
   if (weather_mode == 0) {

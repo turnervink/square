@@ -8,12 +8,17 @@
 Window *main_window;
 TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer;
 Layer *middle_bar_layer;
-GFont time_font, date_font, lg_weather_font, sm_weather_font;
-
+GFont time_font, small_time_font, date_font, lg_weather_font, sm_weather_font;
 
 
 void size_time_layers() {
   GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
+
+  if (show_seconds == 1) {
+    text_layer_set_font(time_layer, small_time_font);
+  } else {
+    text_layer_set_font(time_layer, time_font);
+  }
 
   GSize time_size = text_layer_get_content_size(time_layer);
   layer_set_frame(text_layer_get_layer(time_layer), GRect(0, ((bounds.size.h / 2) + 5 - time_size.h), bounds.size.w, time_size.h));
@@ -30,11 +35,21 @@ void update_time() {
   static char date_num_buffer[] = "DD";
   static char full_date_buffer[] = "WWW DD MMM";
 
-	if(clock_is_24h_style() == true) {
-		strftime(time_buffer, sizeof("00:00:00"), "%H:%M", tick_time);
-	} else {
-		strftime(time_buffer, sizeof("00:00:00"), "%I:%M", tick_time);
-	}
+  if (show_seconds == 1) {
+    if (clock_is_24h_style() == true) {
+  		strftime(time_buffer, sizeof("00:00:00"), "%H:%M:%S", tick_time);
+  	} else {
+  		strftime(time_buffer, sizeof("00:00:00"), "%I:%M:%S", tick_time);
+  	}
+  } else {
+    if (clock_is_24h_style() == true) {
+  		strftime(time_buffer, sizeof("00:00:00"), "%H:%M", tick_time);
+  	} else {
+  		strftime(time_buffer, sizeof("00:00:00"), "%I:%M", tick_time);
+  	}
+  }
+
+
 
 	text_layer_set_text(time_layer, time_buffer);
 
@@ -60,6 +75,7 @@ static void main_window_load(Window *window) {
 
   // Create fonts
   time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SQUARE_50));
+  small_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SQUARE_34));
   date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SQUARE_26));
   sm_weather_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SQUARE_14));
   lg_weather_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SQUARE_18));
@@ -68,7 +84,7 @@ static void main_window_load(Window *window) {
   time_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(time_layer, GColorClear);
   text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
-  text_layer_set_font(time_layer, time_font);
+  //text_layer_set_font(time_layer, time_font);
 
   date_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(date_layer, GColorClear);
