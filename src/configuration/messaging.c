@@ -42,10 +42,10 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     if (true_key == CfgKeyWeatherMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
 
-      //last_weather_mode = weather_mode;
+      last_weather_mode = weather_mode;
       weather_mode = atoi(t->value->cstring);
 
-      if (weather_mode == 0) {
+      if (last_weather_mode == 2 && weather_mode == 0) { // If weather has hidden->shown
         weather_needs_update = true;
       }
     }
