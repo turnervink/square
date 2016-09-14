@@ -3,25 +3,26 @@
 #include "../colours.h"
 
 typedef enum {
-  // Numbered items are exceptions (non-bool)
   CfgKeyTemperature,
   CfgKeyCelsiusTemperature,
   CfgKeyConditions,
-  CfgKeyWeatherMode, // 3
-  CfgKeyWeatherLocation, // 4
-  CfgKeyLanguage, // 5
+  CfgKeyWeatherMode,
+  CfgKeyWeatherLocation,
+  CfgKeyLanguage,
   CfgKeyEuropeanDate,
-  CfgKeyBackgroundColour,  // 7
-  CfgKeyTextColour, // 8
+  CfgKeyVibeOnDisconnect,
+  CfgKeyVibeOnConnect,
+  CfgKeyBackgroundColour,
+  CfgKeyTextColour,
   CfgKeyInvertColours,
-  CfgKeyMiddleBarMode, // 10
+  CfgKeyMiddleBarMode,
   CfgKeyUseAutomaticStepGoal,
-  CfgKeyManualStepGoal, // 12
+  CfgKeyManualStepGoal,
   CfgKeyUseNightMode,
-  CfgKeyNightModeStart, // 14
-  CfgKeyNightModeEnd, // 15
-  CfgKeyNightBackgroundColour,  // 16
-  CfgKeyNightTextColour,  // 17
+  CfgKeyNightModeStart,
+  CfgKeyNightModeEnd,
+  CfgKeyNightBackgroundColour,
+  CfgKeyNightTextColour,
 
 
   CfgKeyCount,
@@ -35,7 +36,7 @@ int middle_bar_mode;
 int manual_step_goal;
 int last_weather_mode, weather_mode;
 
-int euro_date, inv_colours, auto_step_goal, use_night_mode;
+int euro_date, inv_colours, auto_step_goal, use_night_mode, vibe_disconnect, vibe_connect;
 
 void parse_settings(int key, bool value);
 bool get_settings(int key);

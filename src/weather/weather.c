@@ -11,6 +11,10 @@ void update_weather() {
   if (weather_mode == 0) { // If displaying weather, fetch it
     APP_LOG(APP_LOG_LEVEL_INFO, "Requesting weather update");
 
+    // Blank out old weather info (Can/should we clear the buffer too?)
+    text_layer_set_text(temperature_layer, "");
+    text_layer_set_text(conditions_layer, "");
+
   	DictionaryIterator *iter;
   	app_message_outbox_begin(&iter);
 

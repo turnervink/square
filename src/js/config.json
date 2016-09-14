@@ -99,6 +99,18 @@
         "size": 4,
         "id": "bluetooth-heading",
         "defaultValue": "Bluetooth"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyVibeOnDisconnect",
+        "label": "Vibrate on Disconnect",
+        "defaultValue": true
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyVibeOnConnect",
+        "label": "Vibrate on Connect",
+        "defaultValue": true
       }
     ]
   },

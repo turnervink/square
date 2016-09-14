@@ -6,7 +6,7 @@
 
 #define STORED_SETTINGS 5555
 
-static bool config_settings[CfgKeyCount];
+/*static bool config_settings[CfgKeyCount];
 
 static int config_exceptions[11] = {
   3,
@@ -38,9 +38,9 @@ bool is_exception(int key) {
 
     return false;
 
-}
+}*/
 
-bool is_weather(int key) {
+/*bool is_weather(int key) {
   int arr_size = sizeof(weather_keys) / sizeof(weather_keys[0]);
 
   for (int i = 0; i < arr_size; i++) {
@@ -68,7 +68,7 @@ void parse_settings(int key, bool value) {
 
 bool get_settings(int key) {
   return config_settings[key];
-}
+}*/
 
 void save_settings() {
   persist_write_bool(STORED_SETTINGS, true);
@@ -95,6 +95,16 @@ void save_settings() {
     if (i == CfgKeyEuropeanDate) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for euro_date");
       persist_write_int(MESSAGE_KEY_CfgKeyEuropeanDate, euro_date);
+    }
+
+    if (i == CfgKeyVibeOnDisconnect) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for vibe_disconnect");
+      persist_write_int(MESSAGE_KEY_CfgKeyVibeOnDisconnect, vibe_disconnect);
+    }
+
+    if (i == CfgKeyVibeOnConnect) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for vibe_connect");
+      persist_write_int(MESSAGE_KEY_CfgKeyVibeOnConnect, vibe_connect);
     }
 
     if (i == CfgKeyTextColour) {
@@ -200,6 +210,16 @@ void load_settings() {
       if (i == CfgKeyEuropeanDate) {
         APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for euro_date");
         euro_date = persist_read_int(MESSAGE_KEY_CfgKeyEuropeanDate);
+      }
+
+      if (i == CfgKeyVibeOnDisconnect) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for vibe_disconnect");
+        vibe_disconnect = persist_read_int(MESSAGE_KEY_CfgKeyVibeOnDisconnect);
+      }
+
+      if (i == CfgKeyVibeOnConnect) {
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for vibe_connect");
+        vibe_connect = persist_read_int(MESSAGE_KEY_CfgKeyVibeOnConnect);
       }
 
       if (i == CfgKeyTextColour) {

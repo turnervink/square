@@ -70,6 +70,16 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       euro_date = t->value->int32;
     }
 
+    if (true_key == CfgKeyVibeOnDisconnect) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting vibe_disconnect");
+      vibe_disconnect = t->value->int32;
+    }
+
+    if (true_key == CfgKeyVibeOnConnect) {
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting vibe_connect");
+      vibe_connect = t->value->int32;
+    }
+
     if (true_key == CfgKeyBackgroundColour) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting background_colour");
       background_colour = t->value->int32;

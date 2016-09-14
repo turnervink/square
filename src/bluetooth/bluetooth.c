@@ -6,7 +6,7 @@
 
 void bluetooth_handler(bool connected) {
   if (!connected) {
-    vibes_long_pulse();
+    if (vibe_disconnect == 1) vibes_long_pulse();
 
     if (language == 0) {
       text_layer_set_text(temperature_layer, "NO");
@@ -26,9 +26,8 @@ void bluetooth_handler(bool connected) {
     }
 
   } else {
-    vibes_double_pulse();
-    text_layer_set_text(temperature_layer, "");
-    text_layer_set_text(conditions_layer, "");
-    update_weather();
+    if (vibe_connect == 1) vibes_double_pulse();
+
+    update_weather(); // Fetch weather now that phone is connected
   }
 }
