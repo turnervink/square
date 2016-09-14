@@ -15,6 +15,7 @@ typedef enum {
   CfgKeyBackgroundColour,
   CfgKeyTextColour,
   CfgKeyInvertColours,
+  CfgKeyShowSeconds,
   CfgKeyMiddleBarMode,
   CfgKeyUseAutomaticStepGoal,
   CfgKeyManualStepGoal,

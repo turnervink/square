@@ -138,7 +138,13 @@
 				"defaultValue": "00ff00",
 				"label": "Text colour",
 				"sunlight": true
-			}
+			},
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyShowSeconds",
+        "label": "Show Seconds",
+        "defaultValue": false
+      }
     ]
 
   },
@@ -157,6 +163,12 @@
         "type": "toggle",
         "messageKey": "CfgKeyInvertColours",
         "label": "Invert Colours",
+        "defaultValue": false
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyShowSeconds",
+        "label": "Show Seconds",
         "defaultValue": false
       }
     ]
