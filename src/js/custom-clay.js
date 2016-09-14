@@ -25,7 +25,31 @@ module.exports = function(minified) {
 
   }
 
+  function nightModeSection() {
 
+    if (this.get()) {
+      clayConfig.getItemByMessageKey("CfgKeyNightModeStart").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightModeEnd").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightBackgroundColour").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightTextColour").show();
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyNightModeStart").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightModeEnd").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightBackgroundColour").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightTextColour").hide();
+    }
+
+  }
+
+  function locationField() {
+
+    if (this.get() == "2") {
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
+    }
+
+  }
 
 clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
   var _ = minified._;
@@ -41,6 +65,14 @@ clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
   var CfgKeyUseAutomaticStepGoal = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
   stepGoalSlider.call(CfgKeyUseAutomaticStepGoal);
   CfgKeyUseAutomaticStepGoal.on("change", stepGoalSlider);
+
+  var CfgKeyUseNightMode = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
+  nightModeSection.call(CfgKeyUseNightMode);
+  CfgKeyUseNightMode.on("change", nightModeSection);
+
+  var CfgKeyWeatherMode = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
+  locationField.call(CfgKeyWeatherMode);
+  CfgKeyWeatherMode.on("change", locationField);
 
 });
 

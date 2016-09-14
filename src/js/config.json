@@ -41,10 +41,7 @@
         "messageKey": "CfgKeyWeatherLocation",
         "label": "Location:",
         "description": "Leave blank to use GPS",
-        "defaultValue": "",
-        "attributes": {
-          "placeholder": "Vancouver"
-        }
+        "defaultValue": ""
       }
     ]
   },
