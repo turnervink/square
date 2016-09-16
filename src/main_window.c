@@ -84,7 +84,6 @@ static void main_window_load(Window *window) {
   time_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(time_layer, GColorClear);
   text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
-  //text_layer_set_font(time_layer, time_font);
 
   date_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(date_layer, GColorClear);
@@ -102,14 +101,12 @@ static void main_window_load(Window *window) {
   text_layer_set_background_color(temperature_layer, GColorClear);
   text_layer_set_text_alignment(temperature_layer, GTextAlignmentCenter);
   text_layer_set_font(temperature_layer, lg_weather_font);
-  //text_layer_set_text(temperature_layer, "24°");
 
   conditions_layer = text_layer_create(GRect(0, 0, 144, 168));
   text_layer_set_overflow_mode(conditions_layer, GTextOverflowModeWordWrap);
   text_layer_set_background_color(conditions_layer, GColorClear);
   text_layer_set_text_alignment(conditions_layer, GTextAlignmentCenter);
   text_layer_set_font(conditions_layer, lg_weather_font);
-  //text_layer_set_text(conditions_layer, "few clouds");
 
   layer_add_child(window_layer, text_layer_get_layer(time_layer));
   layer_add_child(window_layer, text_layer_get_layer(date_layer));
@@ -120,7 +117,7 @@ static void main_window_load(Window *window) {
   load_settings();
 
   update_time();
-  update_colours(); // Something isn't working here if we load up while in night mode
+  update_colours();
   size_time_layers();
 }
 

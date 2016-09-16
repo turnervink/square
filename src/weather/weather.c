@@ -70,34 +70,3 @@ void display_weather() {
     layer_set_hidden(text_layer_get_layer(conditions_layer), false);
   }
 }
-
-void position_weather_layers(int mode) {
-  /*GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
-  GRect time_frame = layer_get_frame(text_layer_get_layer(time_layer));
-	GSize date_size = text_layer_get_content_size(date_layer);
-	GRect date_frame = layer_get_frame(text_layer_get_layer(date_layer));
-
-  GSize temperature_size = text_layer_get_content_size(temperature_layer);
-  GSize conditions_size = text_layer_get_content_size(conditions_layer);
-
-  // Can we define an "offset" to add to the y-val of our weather layers when seconds are shown rather then defining two GRects? Try this when we add seconds.
-  GRect temperature_offscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + 10, 0 - temperature_size.h), 144, temperature_size.h));
-  GRect temperature_onscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + 10, 0), 144, temperature_size.h));
-
-  GRect conditions_offscreen;
-  GRect conditions_onscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h));*/
-
-  /*if (mode == 0) {
-    // Show layers
-    APP_LOG(APP_LOG_LEVEL_INFO, "Showing weather");
-    layer_set_hidden(text_layer_get_layer(temperature_layer), false);
-    layer_set_hidden(text_layer_get_layer(conditions_layer), false);
-  } else if (mode == 1) {
-    // This is for shake to show if people want it re-added
-  } else if (mode == 2) {
-    // Hide layers
-    APP_LOG(APP_LOG_LEVEL_INFO, "Hiding weather");
-    layer_set_hidden(text_layer_get_layer(temperature_layer), true);
-    layer_set_hidden(text_layer_get_layer(conditions_layer), true);
-  }*/
-}

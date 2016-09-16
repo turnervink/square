@@ -38,7 +38,6 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       conf_vibe = false;
     }
 
-    // Since some of the keys aren't booleans, we check for them here and deal with them accordingly
     if (true_key == CfgKeyWeatherMode) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
 
@@ -140,8 +139,6 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       night_text_colour = t->value->int32;
     }
 
-    /* We want the config array to stay the correct size, so we still parse every setting
-    parse_settings(true_key, t->value->int32);*/
     t = dict_read_next(iter);
   }
 
@@ -153,7 +150,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   update_time();
   size_time_layers();
 
-  if (weather_needs_update) { // If this is false is that the only time we need to display_weather? Would save doing that every time we receive appmessages
+  if (weather_needs_update) {
     update_weather();
   } else {
     display_weather();
@@ -163,6 +160,6 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
 }
 
 void init_messaging() {
-  app_message_register_inbox_received(inbox_recv_handler); // TO DO: Other handlers for dropped msgs, etc
-  app_message_open(256, 256); // TO DO: Calculate buffer based on array size
+  app_message_register_inbox_received(inbox_recv_handler);
+  app_message_open(256, 256);
 }

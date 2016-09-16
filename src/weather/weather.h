@@ -7,4 +7,3 @@ char conditions_buffer[100];
 void update_weather();
 void display_weather();
 void size_weather_layers();
-void position_weather_layers(int mode);
