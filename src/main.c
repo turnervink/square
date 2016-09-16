@@ -5,12 +5,21 @@
 #include "middle_bar.h"
 #include "weather/weather.h"
 #include "bluetooth/bluetooth.h"
+#include "colours.h"
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
 
   if (tick_time->tm_min % 30 == 0 && tick_time->tm_sec == 0) {
     update_weather();
+  }
+
+  if (tick_time->tm_hour == night_start_hour && tick_time->tm_min == 0) {
+    update_colours();
+  }
+
+  if (tick_time->tm_hour == night_end_hour && tick_time->tm_min == 0){
+    update_colours();
   }
 }
 
