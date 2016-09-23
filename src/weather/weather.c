@@ -25,11 +25,7 @@ void update_weather() {
   }
 }
 
-void display_weather() {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Displaying weather");
-  text_layer_set_text(temperature_layer, temp_c_buffer);
-  text_layer_set_text(conditions_layer, conditions_buffer);
-
+void size_weather() {
   APP_LOG(APP_LOG_LEVEL_INFO, "Sizing weather layers");
 
   GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
@@ -54,6 +50,15 @@ void display_weather() {
 
   layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + round_temp_offset, 0), 144, temperature_size.h));
   layer_set_frame(text_layer_get_layer(conditions_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h));
+
+}
+
+void display_weather() {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Displaying weather");
+  text_layer_set_text(temperature_layer, temp_c_buffer);
+  text_layer_set_text(conditions_layer, conditions_buffer);
+
+  size_weather();
 
   if (weather_mode == 0) {
     // Show layers

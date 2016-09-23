@@ -25,6 +25,8 @@ void bluetooth_handler(bool connected) {
       text_layer_set_text(conditions_layer, "CONNECTION");
     }
 
+    size_weather();
+
   } else {
     if (vibe_connect == 1) vibes_double_pulse();
 
