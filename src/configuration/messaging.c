@@ -159,7 +159,22 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   layer_mark_dirty(middle_bar_layer);
 }
 
+void inbox_failed_handler(AppMessageResult reason, void *context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Incoming message dropped! - %d", reason);
+}
+
+void outbox_sent_handler(DictionaryIterator *iterator, void *context) {
+  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
+}
+
+void outbox_failed_handler(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
+}
+
 void init_messaging() {
   app_message_register_inbox_received(inbox_recv_handler);
+  app_message_register_inbox_dropped(inbox_failed_handler);
+  app_message_register_outbox_sent(outbox_sent_handler);
+  app_message_register_outbox_failed(outbox_failed_handler);
   app_message_open(256, 256);
 }
