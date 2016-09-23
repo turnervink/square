@@ -30,7 +30,7 @@ void bluetooth_status_update(bool connected, bool startup) {
   } else {
     if (vibe_connect == 1 && startup == false) vibes_double_pulse();
 
-    update_weather(); // Fetch weather now that phone is connected
+    if (startup == false) update_weather(); // Fetch weather now that phone is connected
   }
 }
 

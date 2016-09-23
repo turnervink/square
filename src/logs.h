@@ -1,3 +1,3 @@
 #pragma once
 
-// #define SHOW_COLOURS_LOGS;
+// #define DEBUG_MODE;

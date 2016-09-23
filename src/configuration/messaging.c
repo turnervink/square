@@ -5,6 +5,7 @@
 #include "../main_window.h"
 #include "../weather/weather.h"
 #include "../lang/lang.h"
+#include "../logs.h"
 
 static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Received messageKeys");
@@ -18,28 +19,36 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
 
     // Deal with weather keys first
     if (true_key == CfgKeyTemperature) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Fahrenheit");
+      #endif
       snprintf(temp_buffer, sizeof(temp_buffer), "%d°", (int)t->value->int32);
       weather_needs_update = false;
       conf_vibe = false;
     }
 
     if (true_key == CfgKeyCelsiusTemperature) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Celsius");
+      #endif
       snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%d°", (int)t->value->int32);
       weather_needs_update = false;
       conf_vibe = false;
     }
 
     if (true_key == CfgKeyConditions) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Received conditions");
+      #endif
       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
       weather_needs_update = false;
       conf_vibe = false;
     }
 
     if (true_key == CfgKeyWeatherMode) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
+      #endif
 
       last_weather_mode = weather_mode;
       weather_mode = atoi(t->value->cstring);
@@ -50,11 +59,15 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     }
 
     if (true_key == CfgKeyWeatherLocation) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Received weather_location");
+      #endif
     }
 
     if (true_key == CfgKeyLanguage) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting language");
+      #endif
 
       last_language = language;
       language = atoi(t->value->cstring);
@@ -65,77 +78,107 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     }
 
     if (true_key == CfgKeyEuropeanDate) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting euro_date");
+      #endif
       euro_date = t->value->int32;
     }
 
     if (true_key == CfgKeyVibeOnDisconnect) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting vibe_disconnect");
+      #endif
       vibe_disconnect = t->value->int32;
     }
 
     if (true_key == CfgKeyVibeOnConnect) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting vibe_connect");
+      #endif
       vibe_connect = t->value->int32;
     }
 
     if (true_key == CfgKeyBackgroundColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting background_colour");
+      #endif
       background_colour = t->value->int32;
     }
 
     if (true_key == CfgKeyTextColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting text_colour");
+      #endif
       text_colour = t->value->int32;
     }
 
     if (true_key == CfgKeyInvertColours) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting inv_colours");
+      #endif
       inv_colours = t->value->int32;
     }
 
     if (true_key == CfgKeyShowSeconds) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting show_seconds");
+      #endif
       show_seconds = t->value->int32;
     }
 
     if (true_key == CfgKeyMiddleBarMode) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting middle_bar_mode");
+      #endif
       middle_bar_mode = atoi(t->value->cstring);
     }
 
     if (true_key == CfgKeyUseAutomaticStepGoal) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting auto_step_goal");
+      #endif
       auto_step_goal = t->value->int32;
     }
 
     if (true_key == CfgKeyManualStepGoal) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting manual_step_goal");
+      #endif
       manual_step_goal = t->value->int32;
     }
 
     if (true_key == CfgKeyUseNightMode) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting use_night_mode");
+      #endif
       use_night_mode = t->value->int32;
     }
 
     if (true_key == CfgKeyNightModeStart) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting night_start_hour");
+      #endif
       night_start_hour = atoi(t->value->cstring);
     }
 
     if (true_key == CfgKeyNightModeEnd) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting night_end_hour");
+      #endif
       night_end_hour = atoi(t->value->cstring);
     }
 
     if (true_key == CfgKeyNightBackgroundColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting night_background_colour");
+      #endif
       night_background_colour = t->value->int32;
     }
 
     if (true_key == CfgKeyNightTextColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting night_text_colour");
+      #endif
       night_text_colour = t->value->int32;
     }
 

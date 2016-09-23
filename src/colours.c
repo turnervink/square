@@ -9,41 +9,41 @@ bool in_night_range() {
 	int cur_hour = tick_time->tm_hour;
 
   if (use_night_mode == 1) {
-    #ifdef SHOW_COLOURS_LOGS
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "CfgKeyUseNightMode is true");
     #endif
     if (night_end_hour < night_start_hour) {
       // The range crosses midnight
-      #ifdef SHOW_COLOURS_LOGS
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "The night range crosses midnight");
       #endif
       if (cur_hour >= night_start_hour) {
-        #ifdef SHOW_COLOURS_LOGS
+        #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "We're past the start, but not midnight");
         #endif
         return true;
       } else if (cur_hour >= 0 && cur_hour < night_end_hour) {
-        #ifdef SHOW_COLOURS_LOGS
+        #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "Past midnight but before the end");
         #endif
         return true;
       } else {
-        #ifdef SHOW_COLOURS_LOGS
+        #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "We're not in the range");
         #endif
         return false;
       }
     } else {
-      #ifdef SHOW_COLOURS_LOGS
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "The night range does not cross midnight");
       #endif
       if (cur_hour >= night_start_hour && cur_hour < night_end_hour) {
-        #ifdef SHOW_COLOURS_LOGS
+        #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "We're in the range");
         #endif
         return true;
       } else {
-        #ifdef SHOW_COLOURS_LOGS
+        #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "We're not in the range");
         #endif
         return false;

@@ -1,6 +1,7 @@
 #include <pebble.h>
 #include "../main_window.h"
 #include "../configuration/settings.h"
+#include "../logs.h"
 
 char temp_buffer[15];
 char temp_c_buffer[15];
@@ -21,12 +22,14 @@ void update_weather() {
   	dict_write_uint8(iter, MESSAGE_KEY_CfgKeyConditions, 0);
   	app_message_outbox_send();
   } else { // Else don't fetch it
-    APP_LOG(APP_LOG_LEVEL_INFO, "Weather was requested but is hidden, not fetching");
+    APP_LOG(APP_LOG_LEVEL_WARNING, "Weather was requested but is hidden, not fetching");
   }
 }
 
 void size_weather() {
+  #ifdef DEBUG_MODE
   APP_LOG(APP_LOG_LEVEL_INFO, "Sizing weather layers");
+  #endif
 
   GRect bounds = layer_get_bounds(window_get_root_layer(main_window));
   GRect time_frame = layer_get_frame(text_layer_get_layer(time_layer));
@@ -36,8 +39,10 @@ void size_weather() {
   GSize temperature_size = text_layer_get_content_size(temperature_layer);
   GSize conditions_size = text_layer_get_content_size(conditions_layer);
 
+  #ifdef DEBUG_MODE
   APP_LOG(APP_LOG_LEVEL_INFO, "Temp height: %d", temperature_size.h);
   APP_LOG(APP_LOG_LEVEL_INFO, "Conditions height: %d", conditions_size.h);
+  #endif
 
   #ifdef PBL_ROUND
   int round_temp_offset;
@@ -54,7 +59,9 @@ void size_weather() {
 }
 
 void display_weather() {
+  #ifdef DEBUG_MODE
   APP_LOG(APP_LOG_LEVEL_INFO, "Displaying weather");
+  #endif
   text_layer_set_text(temperature_layer, temp_c_buffer);
   text_layer_set_text(conditions_layer, conditions_buffer);
 
@@ -62,15 +69,19 @@ void display_weather() {
 
   if (weather_mode == 0) {
     // Show layers
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Showing weather");
+    #endif
     layer_set_hidden(text_layer_get_layer(temperature_layer), false);
     layer_set_hidden(text_layer_get_layer(conditions_layer), false);
   } else if (weather_mode == 2) {
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Hiding weather");
+    #endif
     layer_set_hidden(text_layer_get_layer(temperature_layer), true);
     layer_set_hidden(text_layer_get_layer(conditions_layer), true);
   } else {
-    APP_LOG(APP_LOG_LEVEL_INFO, "Else Showing weather");
+    APP_LOG(APP_LOG_LEVEL_WARNING, "Else Showing weather");
     layer_set_hidden(text_layer_get_layer(temperature_layer), false);
     layer_set_hidden(text_layer_get_layer(conditions_layer), false);
   }

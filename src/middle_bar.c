@@ -2,6 +2,7 @@
 #include "main_window.h"
 #include "middle_bar.h"
 #include "configuration/settings.h"
+#include "logs.h"
 
 int steps, steps_average;
 
@@ -23,7 +24,7 @@ void health_handler(HealthEventType event, void *context) {
 		steps = health_service_sum_today(HealthMetricStepCount);
     steps_average = health_service_sum_averaged(HealthMetricStepCount, start, end_of_day, HealthServiceTimeScopeDailyWeekdayOrWeekend);
 	} else {
-		APP_LOG(APP_LOG_LEVEL_INFO, "Step data unavailable");
+		APP_LOG(APP_LOG_LEVEL_WARNING, "Step data unavailable");
 	}
 }
 #endif
@@ -49,24 +50,32 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
   // Draw the right type of bar based on mode setting
   if (middle_bar_mode == 0) {
     // Draw static bar
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 0");
+    #endif
 
     graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, 140, 2), 0, GCornerNone); // Draw static bar
   } else if (middle_bar_mode == 1) {
     // Draw battery bars shrinking from either side of the screen for that cool "middle out" effect
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 1");
+    #endif
 
     BatteryChargeState state = battery_state_service_peek();
 		int pct = state.charge_percent;
 
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Current battery pct is %d", pct);
+    #endif
 
     graphics_fill_rect(ctx, GRect((bounds.size.w / 2), (bounds.size.h / 2) + 8, ((140)-(((100-pct)/10)*14))/2, 2), 0, GCornerNone); // Centre to right
 		graphics_fill_rect(ctx, GRect((bounds.size.w / 2), (bounds.size.h / 2) + 8, -((140)-(((100-pct)/10)*14))/2, 2), 0, GCornerNone); // Centre to left
   } else if (middle_bar_mode == 2) {
     #ifdef PBL_HEALTH
     // Draw step goal progress bar
+    #ifdef DEBUG_MODE
     APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 2");
+    #endif
 
     int px_per_step_manual = manual_step_goal / 140; // Divide goal by full bar width
     int px_per_step_auto = steps_average / 140;
