@@ -4,6 +4,7 @@
 #include "configuration/settings.h"
 #include "lang/lang.h"
 #include "weather/weather.h"
+#include "bluetooth/bluetooth.h"
 
 Window *main_window;
 TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer;
@@ -119,6 +120,10 @@ static void main_window_load(Window *window) {
   update_time();
   update_colours();
   size_time_layers();
+
+  bool connected = bluetooth_connection_service_peek();
+
+  bluetooth_status_update(connected, true);
 }
 
 static void main_window_unload(Window *window) {
