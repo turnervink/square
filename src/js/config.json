@@ -7,6 +7,11 @@
         "size": 1,
         "id": "main-heading",
         "defaultValue": "Square"
+      },
+      {
+        "type": "text",
+        "defaultValue": "<p style='text-align:center;'>Welcome to Square 5.0! A lot has been changed in this version! See the app store changelog for details. <br><br> One note: language settings have been reset so please select your language again below! If you have any issues please contact me at <a href='http://www.turnervink.com'>www.turnervink.com</a>.</p>"
+
       }
     ]
   },
