@@ -10,8 +10,8 @@
     "pebble-clay": "^1.0.1"
   },
   "pebble": {
-    "displayName": "Square Redux",
-    "uuid": "9ba3db50-2597-40f4-9ff3-2c05a3b31f7d",
+    "displayName": "Square",
+    "uuid": "cb332373-4ee5-4c5c-8912-4f62af2d756c",
     "sdkVersion": "3",
     "enableMultiJS": true,
     "targetPlatforms": [
