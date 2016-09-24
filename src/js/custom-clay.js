@@ -1,33 +1,15 @@
 module.exports = function(minified) {
   var clayConfig = this;
 
-  function stepGoalSlider() {
-
-    if (!this.get()) {
-      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").show();
+  function showLocationField() {
+    if (this.get() == 0) {
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
     } else {
-      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
     }
-
   }
 
-  function manualGoalSwitch() {
-
-    if (this.get() == "2") {
-      console.log("Showing step goal");
-      stepGoalSlider.call(clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal"));
-      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
-    } else {
-      console.log("Not showing step goal");
-      stepGoalSlider.call(clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal"));
-      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
-      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
-    }
-
-  }
-
-  function nightModeSection() {
-
+  function showNightModeSettings() {
     if (this.get()) {
       clayConfig.getItemByMessageKey("CfgKeyNightModeStart").show();
       clayConfig.getItemByMessageKey("CfgKeyNightModeEnd").show();
@@ -39,44 +21,50 @@ module.exports = function(minified) {
       clayConfig.getItemByMessageKey("CfgKeyNightBackgroundColour").hide();
       clayConfig.getItemByMessageKey("CfgKeyNightTextColour").hide();
     }
-
   }
 
-  function locationField() {
-
-    if (this.get() == "2") {
-      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
+  function showStepGoalSlider() {
+    if (this.get()) {
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").show();
     } else {
-      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
     }
-
   }
 
-clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
-  var _ = minified._;
-  var $ = minified.$;
-  var HTML = minified.HTML;
+  function showHealthSettings() {
+    var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
 
-  var platform = clayConfig.meta.activeWatchInfo.platform;
+    if (this.get() == 2) {
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
+      showStepGoalSlider.call(autoGoalToggle);
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
+    }
+  }
 
-  var CfgKeyMiddleBarMode = clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode");
-  manualGoalSwitch.call(CfgKeyMiddleBarMode);
-  CfgKeyMiddleBarMode.on("change", manualGoalSwitch);
+  clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
+    var _ = minified._;
+    var $ = minified.$;
+    var HTML = minified.HTML;
 
-  var CfgKeyUseAutomaticStepGoal = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
-  stepGoalSlider.call(CfgKeyUseAutomaticStepGoal);
-  CfgKeyUseAutomaticStepGoal.on("change", stepGoalSlider);
+    var platform = clayConfig.meta.activeWatchInfo.platform;
 
-  var CfgKeyUseNightMode = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
-  nightModeSection.call(CfgKeyUseNightMode);
-  CfgKeyUseNightMode.on("change", nightModeSection);
+    var weatherModeDropdown = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
+    showLocationField.call(weatherModeDropdown); // Call on page load
+    weatherModeDropdown.on("change", showLocationField); // Call on change
 
-  var CfgKeyWeatherMode = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
-  locationField.call(CfgKeyWeatherMode);
-  CfgKeyWeatherMode.on("change", locationField);
+    var nightModeToggle = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
+    showNightModeSettings.call(nightModeToggle);
+    nightModeToggle.on("change", showNightModeSettings);
 
-});
+    var middleBarDropdown = clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode");
+    showHealthSettings.call(middleBarDropdown);
+    middleBarDropdown.on("change", showHealthSettings);
 
+    var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
+    autoGoalToggle.on("change", showStepGoalSlider);
 
+  });
 
 };
