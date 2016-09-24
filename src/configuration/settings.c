@@ -147,12 +147,15 @@ void save_settings() {
 }
 
 void load_settings() {
-  if (persist_exists(KEY_TEXT_COLOR)) {
+  if (persist_exists(KEY_USE_CELSIUS)) {
     APP_LOG(APP_LOG_LEVEL_WARNING, "Settings from Square < 5.0 are stored!");
 
     #ifdef PBL_COLOR
     text_colour = persist_read_int(KEY_TEXT_COLOR);
     background_colour = persist_read_int(KEY_BACKGROUND_COLOR);
+    #else
+    inv_colours = persist_read_int(KEY_INVERT_COLORS);
+    APP_LOG(APP_LOG_LEVEL_INFO, "Inv colours is %d", inv_colours);
     #endif
 
     use_celsius = persist_read_int(KEY_USE_CELSIUS);
