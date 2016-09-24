@@ -310,7 +310,17 @@
 
   },
 
-
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "button",
+        "defaultValue": "Donate",
+        "id": "donateButton",
+        "description": "<p style='text-align:center;'>Before you tap save, consider donating to support further development!</p>"
+      }
+    ]
+  },
 
   {
     "type": "submit",

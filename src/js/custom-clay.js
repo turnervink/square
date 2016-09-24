@@ -50,6 +50,11 @@ module.exports = function(minified) {
 
     var platform = clayConfig.meta.activeWatchInfo.platform;
 
+    var donateButton = clayConfig.getItemById("donateButton");
+    donateButton.on("click", function() {
+      window.location.href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XM6V4BDNBC2TJ";
+    });
+
     var weatherModeDropdown = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
     showLocationField.call(weatherModeDropdown); // Call on page load
     weatherModeDropdown.on("change", showLocationField); // Call on change
