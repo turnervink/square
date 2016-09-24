@@ -1,11 +1,13 @@
 module.exports = function(minified) {
   var clayConfig = this;
 
-  function showLocationField() {
+  function showWeatherSettings() {
     if (this.get() == 0) {
       clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
+      clayConfig.getItemByMessageKey("CfgKeyUseCelsius").show();
     } else {
       clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
+      clayConfig.getItemByMessageKey("CfgKeyUseCelsius").hide();
     }
   }
 
@@ -56,8 +58,8 @@ module.exports = function(minified) {
     });
 
     var weatherModeDropdown = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
-    showLocationField.call(weatherModeDropdown); // Call on page load
-    weatherModeDropdown.on("change", showLocationField); // Call on change
+    showWeatherSettings.call(weatherModeDropdown); // Call on page load
+    weatherModeDropdown.on("change", showWeatherSettings); // Call on change
 
     var nightModeToggle = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
     showNightModeSettings.call(nightModeToggle);

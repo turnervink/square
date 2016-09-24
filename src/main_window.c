@@ -5,6 +5,7 @@
 #include "lang/lang.h"
 #include "weather/weather.h"
 #include "bluetooth/bluetooth.h"
+#include "logs.h"
 
 Window *main_window;
 TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer;
@@ -51,8 +52,9 @@ void update_time() {
   }
 
 
-
+  #ifndef SCREENSHOT_MODE
 	text_layer_set_text(time_layer, time_buffer);
+  #endif
 
   int month = tick_time->tm_mon;
 	int weekday = tick_time->tm_wday;
@@ -64,7 +66,9 @@ void update_time() {
     snprintf(full_date_buffer, sizeof(full_date_buffer), "%s %s %s", dayNames[language][weekday], monthNames[language][month], date_num_buffer);
   }
 
+  #ifndef SCREENSHOT_MODE
   text_layer_set_text(date_layer, full_date_buffer);
+  #endif
 
   // Mark the middle bar dirty to be sure we update the colours when entering night mode
   layer_mark_dirty(middle_bar_layer);
@@ -85,11 +89,17 @@ static void main_window_load(Window *window) {
   time_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(time_layer, GColorClear);
   text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
+  #ifdef SCREENSHOT_MODE
+  text_layer_set_text(time_layer, "12:35");
+  #endif
 
   date_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(date_layer, GColorClear);
   text_layer_set_text_alignment(date_layer, GTextAlignmentCenter);
   text_layer_set_font(date_layer, date_font);
+  #ifdef SCREENSHOT_MODE
+  text_layer_set_text(date_layer, "SAT SEP 24");
+  #endif
 
   middle_bar_layer = layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
   layer_set_update_proc(middle_bar_layer, middle_bar_update_proc);

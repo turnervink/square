@@ -17,6 +17,13 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyWeatherMode, weather_mode);
     }
 
+    if (i == CfgKeyWeatherMode) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for use_celsius", use_celsius);
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyUseCelsius, use_celsius);
+    }
+
     if (i == CfgKeyWeatherLocation) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving fake value for weather_location");
@@ -144,6 +151,7 @@ void load_settings() {
     APP_LOG(APP_LOG_LEVEL_WARNING, "No saved settings, setting defaults");
 
     weather_mode = 0;
+    use_celsius = 0;
     language = 0;
     euro_date = 0;
     vibe_disconnect = 1;
@@ -169,6 +177,13 @@ void load_settings() {
         weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
         #ifdef DEBUG_MODE
         APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for weather_mode", weather_mode);
+        #endif
+      }
+
+      if (i== CfgKeyWeatherMode) {
+        use_celsius = persist_read_int(MESSAGE_KEY_CfgKeyUseCelsius);
+        #ifdef DEBUG_MODE
+        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for use_celsius", use_celsius);
         #endif
       }
 

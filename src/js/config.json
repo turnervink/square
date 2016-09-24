@@ -37,6 +37,12 @@
         ]
       },
       {
+        "type": "toggle",
+        "messageKey": "CfgKeyUseCelsius",
+        "label": "Use Celsius",
+        "defaultValue": false
+      },
+      {
         "type": "input",
         "messageKey": "CfgKeyWeatherLocation",
         "label": "Location:",

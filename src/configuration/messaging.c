@@ -58,6 +58,14 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       }
     }
 
+    if (true_key == CfgKeyUseCelsius) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting use_celsius");
+      #endif
+
+      use_celsius = t->value->int32;
+    }
+
     if (true_key == CfgKeyWeatherLocation) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Received weather_location");

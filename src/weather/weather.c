@@ -62,8 +62,19 @@ void display_weather() {
   #ifdef DEBUG_MODE
   APP_LOG(APP_LOG_LEVEL_INFO, "Displaying weather");
   #endif
-  text_layer_set_text(temperature_layer, temp_c_buffer);
+
+  #ifdef SCREENSHOT_MODE
+  text_layer_set_text(temperature_layer, "78°");
+  text_layer_set_text(conditions_layer, "Sunny");
+  #else
+  if (use_celsius == 1) {
+    text_layer_set_text(temperature_layer, temp_c_buffer);
+  } else {
+    text_layer_set_text(temperature_layer, temp_buffer);
+  }
+
   text_layer_set_text(conditions_layer, conditions_buffer);
+  #endif
 
   size_weather();
 
