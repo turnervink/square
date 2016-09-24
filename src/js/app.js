@@ -150,12 +150,9 @@ Pebble.addEventListener("ready", function(e) {
     location = '';
   }
 
-  console.log("Showing notif");
-  Pebble.showSimpleNotificationOnPebble("Welcome to Square 5.0!", "Text goes here...");
+
 
 	getWeather(); // Get weather on launch
-
-
 });
 
 // AppMessage received

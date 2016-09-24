@@ -65,7 +65,7 @@ void display_weather() {
 
   #ifdef SCREENSHOT_MODE
   text_layer_set_text(temperature_layer, "78°");
-  text_layer_set_text(conditions_layer, "Sunny");
+  text_layer_set_text(conditions_layer, "Partly Cloudy");
   #else
   if (use_celsius == 1) {
     text_layer_set_text(temperature_layer, temp_c_buffer);
