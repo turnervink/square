@@ -1,5 +1,5 @@
 {
-  "name": "square_redux",
+  "name": "Square",
   "author": "Turner Vink",
   "version": "1.0.0",
   "keywords": [
@@ -17,7 +17,8 @@
     "targetPlatforms": [
       "aplite",
       "basalt",
-      "chalk"
+      "chalk",
+      "diorite"
     ],
     "capabilities": [
       "configurable",
