@@ -78,7 +78,7 @@
           "type": "font"
         },
         {
-          "characterRegex": "[0-9:A-Za-z° ]",
+          
           "file": "fonts/Square.ttf",
           "name": "FONT_SQUARE_18",
           "type": "font"

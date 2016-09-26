@@ -7,6 +7,7 @@ var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
 var lang;
 var location;
+var last_location;
 
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
@@ -110,6 +111,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
   lang = dict[messageKeys.CfgKeyLanguage];
   console.log("Lang is " + lang);
 
+  last_location = location;
   location = dict[messageKeys.CfgKeyWeatherLocation];
   console.log("Location is " + location);
 
@@ -130,6 +132,11 @@ Pebble.addEventListener('webviewclosed', function(e) {
   Pebble.sendAppMessage(dict,
 		function(e) {
     	console.log("ACK config settings");
+
+      if (location !== last_location) {
+        console.log("Location has changed, updating weather");
+        getWeather();
+      }
   	},
 		function(e) {
     	console.log('NACK config settings: ' + JSON.stringify(e));

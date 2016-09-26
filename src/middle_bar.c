@@ -51,21 +51,21 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
   if (middle_bar_mode == 0) {
     // Draw static bar
     #ifdef DEBUG_MODE
-    APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 0");
+    //APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 0");
     #endif
 
     graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, 140, 2), 0, GCornerNone); // Draw static bar
   } else if (middle_bar_mode == 1) {
     // Draw battery bars shrinking from either side of the screen for that cool "middle out" effect
     #ifdef DEBUG_MODE
-    APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 1");
+    //APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 1");
     #endif
 
     BatteryChargeState state = battery_state_service_peek();
 		int pct = state.charge_percent;
 
     #ifdef DEBUG_MODE
-    APP_LOG(APP_LOG_LEVEL_INFO, "Current battery pct is %d", pct);
+    //APP_LOG(APP_LOG_LEVEL_INFO, "Current battery pct is %d", pct);
     #endif
 
     graphics_fill_rect(ctx, GRect((bounds.size.w / 2), (bounds.size.h / 2) + 8, ((140)-(((100-pct)/10)*14))/2, 2), 0, GCornerNone); // Centre to right
@@ -74,7 +74,7 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
     #ifdef PBL_HEALTH
     // Draw step goal progress bar
     #ifdef DEBUG_MODE
-    APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 2");
+    //APP_LOG(APP_LOG_LEVEL_INFO, "Bar mode 2");
     #endif
 
     int px_per_step_manual = manual_step_goal / 140; // Divide goal by full bar width

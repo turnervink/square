@@ -23,7 +23,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Fahrenheit");
       #endif
       snprintf(temp_buffer, sizeof(temp_buffer), "%d°", (int)t->value->int32);
-      weather_needs_update = false;
+      //weather_needs_update = false;
       conf_vibe = false;
     }
 
@@ -32,7 +32,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received temperature in Celsius");
       #endif
       snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%d°", (int)t->value->int32);
-      weather_needs_update = false;
+      //weather_needs_update = false;
       conf_vibe = false;
     }
 
@@ -41,7 +41,7 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Received conditions");
       #endif
       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
-      weather_needs_update = false;
+      //weather_needs_update = false;
       conf_vibe = false;
     }
 
