@@ -41,22 +41,28 @@ function locationSuccess(pos) {
 
       var json = JSON.parse(responseText); // Parse JSON response
 
-      var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32); // Convert from Kelvin to Fahrenheit
-      console.log("Temperature in Fahrenheit is " + temperature);
+      if (!json.main) {
+        var dictionary = {
+          "CfgKeyWeatherError": "error",
+        };
+      } else {
+        var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32); // Convert from Kelvin to Fahrenheit
+        console.log("Temperature in Fahrenheit is " + temperature);
 
-      var temperaturec = Math.round(json.main.temp - 273.15); // Convert from Kelvin to Celsius
-      console.log("Temperature in Celsius is " + temperaturec);
+        var temperaturec = Math.round(json.main.temp - 273.15); // Convert from Kelvin to Celsius
+        console.log("Temperature in Celsius is " + temperaturec);
 
-      // Conditions
-      var conditions = json.weather[0].description;
-      console.log("Conditions are " + conditions);
+        // Conditions
+        var conditions = json.weather[0].description;
+        console.log("Conditions are " + conditions);
 
-      // Assemble weather info into dictionary
-      var dictionary = {
-        "CfgKeyTemperature": temperature,
-        "CfgKeyCelsiusTemperature": temperaturec,
-        "CfgKeyConditions": conditions,
-      };
+        // Assemble weather info into dictionary
+        var dictionary = {
+          "CfgKeyTemperature": temperature,
+          "CfgKeyCelsiusTemperature": temperaturec,
+          "CfgKeyConditions": conditions,
+        };
+      }
 
       // Send dictionary to Pebble
       Pebble.sendAppMessage(dictionary,

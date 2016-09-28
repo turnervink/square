@@ -45,6 +45,32 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       conf_vibe = false;
     }
 
+    if (true_key == CfgKeyWeatherError) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_ERROR, "Received weather error!");
+      #endif
+
+      if (language == 0) { // en
+        snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Error");
+        snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Error");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "City not found");
+      } else if (language == 1) { // fr
+        snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Erreur");
+        snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Erreur");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "ville introuvable");
+      } else if (language == 2) { // es
+        snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Error");
+        snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Error");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "hay tal ciudad");
+      } else if (language == 3) { // de
+        snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Fehler");
+        snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Fehler");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "keine solche Stadt");
+      }
+
+      conf_vibe = false;
+    }
+
     if (true_key == CfgKeyWeatherMode) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather_mode");
