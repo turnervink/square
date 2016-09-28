@@ -26,7 +26,7 @@ module.exports = function(minified) {
   }
 
   function showStepGoalSlider() {
-    if (this.get()) {
+    if (!this.get()) {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").show();
     } else {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();

@@ -1,7 +1,7 @@
 {
   "name": "Square",
   "author": "Turner Vink",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "keywords": [
     "pebble-app"
   ],
@@ -78,7 +78,7 @@
           "type": "font"
         },
         {
-          
+
           "file": "fonts/Square.ttf",
           "name": "FONT_SQUARE_18",
           "type": "font"

@@ -81,9 +81,18 @@ void middle_bar_update_proc(Layer *layer, GContext *ctx) {
     int px_per_step_auto = steps_average / 140;
 
     if (auto_step_goal == 1) {
-      graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_auto, 2), 0, GCornerNone); // Draw steps bar
+      if (steps / px_per_step_auto >= 140) {
+        graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, 140, 2), 0, GCornerNone); // Draw static bar if goal has been reached
+      } else {
+        graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_auto, 2), 0, GCornerNone); // Draw steps bar
+      }
     } else {
-      graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_manual, 2), 0, GCornerNone); // Draw steps bar
+      if (steps / px_per_step_manual >= 140) {
+        graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, 140, 2), 0, GCornerNone); // Draw static bar if goal has been reached
+      } else {
+        graphics_fill_rect(ctx, GRect(PBL_IF_ROUND_ELSE(20, 2), (bounds.size.h / 2) + 8, steps / px_per_step_manual, 2), 0, GCornerNone); // Draw steps bar
+      }
+
     }
     #else
     // If the watch doesn't support Pebble Health, just show the static bar
