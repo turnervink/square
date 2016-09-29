@@ -1,7 +1,7 @@
 {
-  "name": "square_redux",
+  "name": "Square",
   "author": "Turner Vink",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "keywords": [
     "pebble-app"
   ],
@@ -10,14 +10,15 @@
     "pebble-clay": "^1.0.1"
   },
   "pebble": {
-    "displayName": "Square Redux",
-    "uuid": "9ba3db50-2597-40f4-9ff3-2c05a3b31f7d",
+    "displayName": "Square",
+    "uuid": "cb332373-4ee5-4c5c-8912-4f62af2d756c",
     "sdkVersion": "3",
     "enableMultiJS": true,
     "targetPlatforms": [
       "aplite",
       "basalt",
-      "chalk"
+      "chalk",
+      "diorite"
     ],
     "capabilities": [
       "configurable",
@@ -30,12 +31,20 @@
       "CfgKeyTemperature",
       "CfgKeyCelsiusTemperature",
       "CfgKeyConditions",
+      "CfgKeyWeatherError",
+      "CfgKeyWeatherMode",
+      "CfgKeyUseCelsius",
+      "CfgKeyWeatherLocation",
       "CfgKeyLanguage",
       "CfgKeyEuropeanDate",
+      "CfgKeyVibeOnDisconnect",
+      "CfgKeyVibeOnConnect",
       "CfgKeyBackgroundColour",
       "CfgKeyTextColour",
       "CfgKeyInvertColours",
+      "CfgKeyShowSeconds",
       "CfgKeyMiddleBarMode",
+      "CfgKeyEnableHealth",
       "CfgKeyUseAutomaticStepGoal",
       "CfgKeyManualStepGoal",
       "CfgKeyUseNightMode",
@@ -55,6 +64,12 @@
         {
           "characterRegex": "[0-9:A-Za-z ]",
           "file": "fonts/Square.ttf",
+          "name": "FONT_SQUARE_34",
+          "type": "font"
+        },
+        {
+          "characterRegex": "[0-9:A-Za-z ]",
+          "file": "fonts/Square.ttf",
           "name": "FONT_SQUARE_26",
           "type": "font"
         },
@@ -65,7 +80,7 @@
           "type": "font"
         },
         {
-          "characterRegex": "[0-9:A-Za-z° ]",
+
           "file": "fonts/Square.ttf",
           "name": "FONT_SQUARE_18",
           "type": "font"

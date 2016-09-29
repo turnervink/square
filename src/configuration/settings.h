@@ -3,23 +3,31 @@
 #include "../colours.h"
 
 typedef enum {
-  // Numbered items are exceptions (non-bool)
-  CfgKeyTemperature, // 0
-  CfgKeyCelsiusTemperature, // 1
-  CfgKeyConditions, // 2
-  CfgKeyLanguage, // 3
+  CfgKeyTemperature,
+  CfgKeyCelsiusTemperature,
+  CfgKeyConditions,
+  CfgKeyWeatherError,
+  CfgKeyWeatherMode,
+  CfgKeyUseCelsius,
+  CfgKeyWeatherLocation,
+  CfgKeyLanguage,
   CfgKeyEuropeanDate,
-  CfgKeyBackgroundColour,  // 5
-  CfgKeyTextColour, // 6
+  CfgKeyVibeOnDisconnect,
+  CfgKeyVibeOnConnect,
+  CfgKeyBackgroundColour,
+  CfgKeyTextColour,
   CfgKeyInvertColours,
-  CfgKeyMiddleBarMode, // 8
+  CfgKeyShowSeconds,
+  CfgKeyMiddleBarMode,
+  CfgKeyEnableHealth,
   CfgKeyUseAutomaticStepGoal,
-  CfgKeyManualStepGoal, // 10
+  CfgKeyManualStepGoal,
   CfgKeyUseNightMode,
-  CfgKeyNightModeStart, // 12
-  CfgKeyNightModeEnd, // 13
-  CfgKeyNightBackgroundColour,  // 14
-  CfgKeyNightTextColour,  // 15
+  CfgKeyNightModeStart,
+  CfgKeyNightModeEnd,
+  CfgKeyNightBackgroundColour,
+  CfgKeyNightTextColour,
+
 
   CfgKeyCount,
 } CfgKey;
@@ -27,11 +35,12 @@ typedef enum {
 // Define ints for non-bool settings
 int background_colour, text_colour, night_background_colour, night_text_colour;
 int night_start_hour, night_end_hour;
-int language;
+int last_language, language;
 int middle_bar_mode;
-int manual_step_goal;
+int manual_step_goal, enable_health;
+int last_weather_mode, weather_mode;
 
-void parse_settings(int key, bool value);
-bool get_settings(int key);
+int euro_date, inv_colours, auto_step_goal, use_night_mode, vibe_disconnect, vibe_connect, show_seconds, use_celsius;
+
 void save_settings();
 void load_settings();

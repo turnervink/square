@@ -1,212 +1,348 @@
 #include <pebble.h>
 #include "settings.h"
+#include "transition.h"
 #include "../main_window.h"
-
-// Thanks to Chris Lewis for hosting his watchface "Thin" on GitHub so I could use it for this config setup!
+#include "../logs.h"
 
 #define STORED_SETTINGS 5555
-
-static bool config_settings[CfgKeyCount];
-
-static int config_exceptions[9] = {
-  3,
-  5,
-  6,
-  8,
-  10,
-  12,
-  13,
-  14,
-  15
-};
-
-static int weather_keys[3] = {
-  0,
-  1,
-  2
-};
-
-bool is_exception(int key) {
-  int arr_size = sizeof(config_exceptions) / sizeof(config_exceptions[0]);
-
-  for (int i = 0; i < arr_size; i++) {
-    if (config_exceptions[i] == key)
-      return true;
-  }
-
-    return false;
-
-}
-
-bool is_weather(int key) {
-  int arr_size = sizeof(weather_keys) / sizeof(weather_keys[0]);
-
-  for (int i = 0; i < arr_size; i++) {
-    if (weather_keys[i] == key)
-      return true;
-  }
-
-    return false;
-
-}
-
-void parse_settings(int key, bool value) {
-
-  if (is_exception(key)) { // If we have a non-bool key, we write a value of 1 to the config array
-    APP_LOG(APP_LOG_LEVEL_INFO, "Key %d is an exception; adding a value to config array", key);
-    config_settings[key] = 1;
-  } else if (is_weather(key)) {
-    APP_LOG(APP_LOG_LEVEL_INFO, "Key %d is a weather key, ignoring", key);
-  } else {
-    APP_LOG(APP_LOG_LEVEL_INFO, "Parsing key %d that has a value of %d", key, value);
-    config_settings[key] = value;
-  }
-
-}
-
-bool get_settings(int key) {
-  return config_settings[key];
-}
 
 void save_settings() {
   persist_write_bool(STORED_SETTINGS, true);
 
   for (int i = 0; i < CfgKeyCount; i++) {
-    /* Save each config option, with exceptions for non-bool values
-    NOTE: We still save every array element even if it's non-bool to keep the count correct */
+
+    if (i == CfgKeyWeatherMode) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for weather_mode", weather_mode);
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyWeatherMode, weather_mode);
+    }
+
+    if (i == CfgKeyWeatherMode) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for use_celsius", use_celsius);
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyUseCelsius, use_celsius);
+    }
+
+    if (i == CfgKeyWeatherLocation) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving fake value for weather_location");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyWeatherLocation, 0);
+    }
 
     if (i == CfgKeyLanguage) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for language");
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyLanguage, language);
     }
 
-    if (i == CfgKeyTextColour) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for text_colour", text_colour);
-      persist_write_int(MESSAGE_KEY_CfgKeyTextColour, text_colour);
+    if (i == CfgKeyEuropeanDate) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for euro_date");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyEuropeanDate, euro_date);
     }
 
-    if (i == CfgKeyMiddleBarMode) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for middle_bar_mode");
-      persist_write_int(MESSAGE_KEY_CfgKeyMiddleBarMode, middle_bar_mode);
+    if (i == CfgKeyVibeOnDisconnect) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for vibe_disconnect");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyVibeOnDisconnect, vibe_disconnect);
+    }
+
+    if (i == CfgKeyVibeOnConnect) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for vibe_connect");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyVibeOnConnect, vibe_connect);
     }
 
     if (i == CfgKeyBackgroundColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for background_colour", background_colour);
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyBackgroundColour, background_colour);
     }
 
+    if (i == CfgKeyTextColour) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for text_colour", text_colour);
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyTextColour, text_colour);
+    }
+
+    if (i == CfgKeyInvertColours) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for inv_colours");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyInvertColours, inv_colours);
+    }
+
+    if (i == CfgKeyShowSeconds) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for show_seconds");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyShowSeconds, show_seconds);
+    }
+
+    if (i == CfgKeyMiddleBarMode) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for middle_bar_mode");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyMiddleBarMode, middle_bar_mode);
+    }
+
+    if (i == CfgKeyEnableHealth) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for enable_health");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyEnableHealth, enable_health);
+    }
+
+    if (i == CfgKeyUseAutomaticStepGoal) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for auto_step_goal");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal, auto_step_goal);
+    }
+
     if (i == CfgKeyManualStepGoal) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for manual_step_goal");
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyManualStepGoal, manual_step_goal);
     }
 
+    if (i == CfgKeyUseNightMode) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for use_night_mode");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyUseNightMode, use_night_mode);
+    }
+
     if (i == CfgKeyNightModeStart) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for night_start_hour");
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyNightModeStart, night_start_hour);
     }
 
     if (i== CfgKeyNightModeEnd) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for night_end_hour");
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyNightModeEnd, night_end_hour);
     }
 
-    // Don't show we're saving the dummy array elements in the logs
-    if (!is_exception(i)) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving setting %d with value of %d", i, config_settings[i]);
-    }
-
-    if (i == CfgKeyNightTextColour) {
-      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_text_colour", night_text_colour);
-      persist_write_int(MESSAGE_KEY_CfgKeyNightTextColour, night_text_colour);
-    }
-
     if (i == CfgKeyNightBackgroundColour) {
+      #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_background_colour", night_background_colour);
+      #endif
       persist_write_int(MESSAGE_KEY_CfgKeyNightBackgroundColour, night_background_colour);
     }
 
-    // Save bool options
-    persist_write_bool(i, config_settings[i]);
+    if (i == CfgKeyNightTextColour) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value of %d for night_text_colour", night_text_colour);
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyNightTextColour, night_text_colour);
+    }
   }
 }
 
 void load_settings() {
-  if (!persist_exists(STORED_SETTINGS)) {
-    // Set default settings
-    APP_LOG(APP_LOG_LEVEL_INFO, "Setting default settings");
+  if (persist_exists(KEY_USE_CELSIUS)) {
+    APP_LOG(APP_LOG_LEVEL_WARNING, "Settings from Square < 5.0 are stored!");
 
-    language = 0;
-    background_colour = 0x000000;
-    text_colour = 0x00ff00;
-    middle_bar_mode = 1;
-    config_settings[CfgKeyInvertColours] = 0;
-    config_settings[CfgKeyUseNightMode] = 0;
-    night_start_hour = 20;
-    night_end_hour = 7;
-    night_background_colour = 0x000000;
-    night_text_colour = 0xFFFFFF;
+    #ifdef PBL_COLOR
+    text_colour = persist_read_int(KEY_TEXT_COLOR);
+    background_colour = persist_read_int(KEY_BACKGROUND_COLOR);
+    #else
+    inv_colours = persist_read_int(KEY_INVERT_COLORS);
+    APP_LOG(APP_LOG_LEVEL_INFO, "Inv colours is %d", inv_colours);
+    #endif
+
+    use_celsius = persist_read_int(KEY_USE_CELSIUS);
+
+    int old_weather_setting = persist_read_int(KEY_SHOW_WEATHER);
+    if (old_weather_setting == 0) {
+      weather_mode = 2;
+    } else {
+      weather_mode = 0;
+    }
+
+    vibe_connect = persist_read_int(KEY_VIBE_ON_CONNECT);
+
+    vibe_disconnect = persist_read_int(KEY_VIBE_ON_DISCONNECT);
+
+    euro_date = persist_read_int(KEY_DATE_FORMAT);
+
+
   } else {
-    // Load stored settings
-    APP_LOG(APP_LOG_LEVEL_INFO, "Loading saved settings");
 
-    for (int i = 0; i < CfgKeyCount; i++) {
+    if (!persist_exists(STORED_SETTINGS)) {
+      // Set default settings
+      APP_LOG(APP_LOG_LEVEL_WARNING, "No saved settings, setting defaults");
 
-      // Load exceptions first
-      if (i == CfgKeyLanguage) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for language");
-        language = persist_read_int(MESSAGE_KEY_CfgKeyLanguage);
-      }
+      weather_mode = 0;
+      use_celsius = 0;
+      language = 0;
+      euro_date = 0;
+      vibe_disconnect = 1;
+      vibe_connect = 1;
+      background_colour = 0x000000;
+      text_colour = 0x00ff00;
+      inv_colours = 0;
+      show_seconds = 0;
+      middle_bar_mode = 1;
+      enable_health = 1;
+      auto_step_goal = 1;
+      use_night_mode = 0;
+      night_start_hour = 20;
+      night_end_hour = 7;
+      night_background_colour = 0x000000;
+      night_text_colour = 0xFFFFFF;
+    } else {
+      // Load stored settings
+      APP_LOG(APP_LOG_LEVEL_INFO, "Loading saved settings");
 
-      if (i == CfgKeyTextColour) {
+      for (int i = 0; i < CfgKeyCount; i++) {
 
-        text_colour = persist_read_int(MESSAGE_KEY_CfgKeyTextColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored of %d value for text_colour", text_colour);
-      }
+        if (i== CfgKeyWeatherMode) {
+          weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for weather_mode", weather_mode);
+          #endif
+        }
 
-      if (i == CfgKeyMiddleBarMode) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for middle_bar_mode");
-        middle_bar_mode = persist_read_int(MESSAGE_KEY_CfgKeyMiddleBarMode);
-      }
+        if (i== CfgKeyWeatherMode) {
+          use_celsius = persist_read_int(MESSAGE_KEY_CfgKeyUseCelsius);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for use_celsius", use_celsius);
+          #endif
+        }
 
-      if (i == CfgKeyBackgroundColour) {
+        if (i == CfgKeyLanguage) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for language");
+          #endif
+          language = persist_read_int(MESSAGE_KEY_CfgKeyLanguage);
+        }
 
-        background_colour = persist_read_int(MESSAGE_KEY_CfgKeyBackgroundColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for background_colour", background_colour);
-      }
+        if (i == CfgKeyEuropeanDate) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for euro_date");
+          #endif
+          euro_date = persist_read_int(MESSAGE_KEY_CfgKeyEuropeanDate);
+        }
 
-      if (i == CfgKeyManualStepGoal) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for manual_step_goal");
-        manual_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyManualStepGoal);
-      }
+        if (i == CfgKeyVibeOnDisconnect) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for vibe_disconnect");
+          #endif
+          vibe_disconnect = persist_read_int(MESSAGE_KEY_CfgKeyVibeOnDisconnect);
+        }
 
-      if (i == CfgKeyNightModeStart) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for night_start_hour");
-        night_start_hour = persist_read_int(MESSAGE_KEY_CfgKeyNightModeStart);
-      }
+        if (i == CfgKeyVibeOnConnect) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for vibe_connect");
+          #endif
+          vibe_connect = persist_read_int(MESSAGE_KEY_CfgKeyVibeOnConnect);
+        }
 
-      if (i == CfgKeyNightModeEnd) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for night_end_hour");
-        night_end_hour = persist_read_int(MESSAGE_KEY_CfgKeyNightModeEnd);
-      }
+        if (i == CfgKeyBackgroundColour) {
+          background_colour = persist_read_int(MESSAGE_KEY_CfgKeyBackgroundColour);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for background_colour", background_colour);
+          #endif
+        }
 
-      if (i == CfgKeyNightTextColour) {
+        if (i == CfgKeyTextColour) {
+          text_colour = persist_read_int(MESSAGE_KEY_CfgKeyTextColour);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored of %d value for text_colour", text_colour);
+          #endif
+        }
 
-        night_text_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightTextColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_text_colour", night_text_colour);
-      }
+        if (i == CfgKeyInvertColours) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for inv_colours");
+          #endif
+          inv_colours = persist_read_int(MESSAGE_KEY_CfgKeyInvertColours);
+        }
 
-      if (i == CfgKeyNightBackgroundColour) {
+        if (i == CfgKeyShowSeconds) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for show_seconds");
+          #endif
+          show_seconds = persist_read_int(MESSAGE_KEY_CfgKeyShowSeconds);
+        }
 
-        night_background_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightBackgroundColour);
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_background_colour", night_background_colour);
-      }
+        if (i == CfgKeyMiddleBarMode) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for middle_bar_mode");
+          #endif
+          middle_bar_mode = persist_read_int(MESSAGE_KEY_CfgKeyMiddleBarMode);
+        }
 
-      // Then load bool options
-      config_settings[i] = persist_read_bool(i);
+        if (i == CfgKeyEnableHealth) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for enable_health");
+          #endif
+          enable_health = persist_read_int(MESSAGE_KEY_CfgKeyEnableHealth);
+        }
 
-      // Don't show we're loading the stored dummy array elements in the logs
-      if (!is_exception(i)) {
-        APP_LOG(APP_LOG_LEVEL_INFO, "Loaded setting %d with value of %d", i, persist_read_bool(i));
+        if (i == CfgKeyUseAutomaticStepGoal) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for auto_step_goal");
+          #endif
+          auto_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyUseAutomaticStepGoal);
+        }
+
+        if (i == CfgKeyManualStepGoal) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for manual_step_goal");
+          #endif
+          manual_step_goal = persist_read_int(MESSAGE_KEY_CfgKeyManualStepGoal);
+        }
+
+        if (i == CfgKeyUseNightMode) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for use_night_mode");
+          #endif
+          use_night_mode = persist_read_int(MESSAGE_KEY_CfgKeyUseNightMode);
+        }
+
+        if (i == CfgKeyNightModeStart) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for night_start_hour");
+          #endif
+          night_start_hour = persist_read_int(MESSAGE_KEY_CfgKeyNightModeStart);
+        }
+
+        if (i == CfgKeyNightModeEnd) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for night_end_hour");
+          #endif
+          night_end_hour = persist_read_int(MESSAGE_KEY_CfgKeyNightModeEnd);
+        }
+
+        if (i == CfgKeyNightBackgroundColour) {
+          night_background_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightBackgroundColour);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_background_colour", night_background_colour);
+          #endif
+        }
+
+        if (i == CfgKeyNightTextColour) {
+          night_text_colour = persist_read_int(MESSAGE_KEY_CfgKeyNightTextColour);
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value of %d for night_text_colour", night_text_colour);
+          #endif
+        }
       }
     }
   }

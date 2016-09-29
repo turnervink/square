@@ -1,49 +1,107 @@
 module.exports = function(minified) {
   var clayConfig = this;
 
-  function stepGoalSlider() {
+  function showWeatherSettings() {
+    if (this.get() == 0) {
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
+      clayConfig.getItemByMessageKey("CfgKeyUseCelsius").show();
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
+      clayConfig.getItemByMessageKey("CfgKeyUseCelsius").hide();
+    }
+  }
 
+  function showNightModeSettings() {
+    if (this.get()) {
+      clayConfig.getItemByMessageKey("CfgKeyNightModeStart").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightModeEnd").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightBackgroundColour").show();
+      clayConfig.getItemByMessageKey("CfgKeyNightTextColour").show();
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyNightModeStart").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightModeEnd").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightBackgroundColour").hide();
+      clayConfig.getItemByMessageKey("CfgKeyNightTextColour").hide();
+    }
+  }
+
+  function showStepGoalSlider() {
     if (!this.get()) {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").show();
     } else {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
     }
 
+    disableHealthSettings.call(clayConfig.getItemByMessageKey("CfgKeyEnableHealth"));
   }
 
-  function manualGoalSwitch() {
-
-    if (this.get() == "2") {
-      console.log("Showing step goal");
-      stepGoalSlider.call(clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal"));
-      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
-    } else {
-      console.log("Not showing step goal");
+  function disableHealthSettings() {
+    if (!this.get()) {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
       clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
+    } else {
+      showHealthSettings.call(clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode"));
     }
+  }
 
+  function showHealthSettings() {
+    var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
+    var enableHealthToggle = clayConfig.getItemByMessageKey("CfgKeyEnableHealth");
+
+    if (this.get() == 2) {
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
+      clayConfig.getItemByMessageKey("CfgKeyEnableHealth").show();
+      //disableHealthSettings.call(enableHealthToggle);
+      showStepGoalSlider.call(autoGoalToggle);
+    } else {
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
+      clayConfig.getItemByMessageKey("CfgKeyEnableHealth").hide();
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
+    }
   }
 
 
+  clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
+    var _ = minified._;
+    var $ = minified.$;
+    var HTML = minified.HTML;
 
-clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
-  var _ = minified._;
-  var $ = minified.$;
-  var HTML = minified.HTML;
+    var platform = clayConfig.meta.activeWatchInfo.platform;
 
-  var platform = clayConfig.meta.activeWatchInfo.platform;
+    var donateButton = clayConfig.getItemById("donateButton");
+    donateButton.on("click", function() {
+      window.location.href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XM6V4BDNBC2TJ";
+    });
 
-  var CfgKeyMiddleBarMode = clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode");
-  manualGoalSwitch.call(CfgKeyMiddleBarMode);
-  CfgKeyMiddleBarMode.on("change", manualGoalSwitch);
+    if (clayConfig.getItemByMessageKey("CfgKeyWeatherMode")) {
+      var weatherModeDropdown = clayConfig.getItemByMessageKey("CfgKeyWeatherMode");
+      showWeatherSettings.call(weatherModeDropdown); // Call on page load
+      weatherModeDropdown.on("change", showWeatherSettings); // Call on change
+    }
 
-  var CfgKeyUseAutomaticStepGoal = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
-  stepGoalSlider.call(CfgKeyUseAutomaticStepGoal);
-  CfgKeyUseAutomaticStepGoal.on("change", stepGoalSlider);
+    if (clayConfig.getItemByMessageKey("CfgKeyUseNightMode")) {
+      var nightModeToggle = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
+      showNightModeSettings.call(nightModeToggle);
+      nightModeToggle.on("change", showNightModeSettings);
+    }
 
-});
+    if (clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode")) {
+      var middleBarDropdown = clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode");
+      showHealthSettings.call(middleBarDropdown);
+      middleBarDropdown.on("change", showHealthSettings);
+    }
 
+    if (clayConfig.getItemByMessageKey("CfgKeyEnableHealth")) {
+      var enableHealthToggle = clayConfig.getItemByMessageKey("CfgKeyEnableHealth");
+      disableHealthSettings.call(enableHealthToggle);
+      enableHealthToggle.on("change", disableHealthSettings);
+    }
 
+    if (clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal")) {
+      var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
+      autoGoalToggle.on("change", showStepGoalSlider);
+    }
+
+  });
 
 };

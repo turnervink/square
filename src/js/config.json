@@ -6,7 +6,12 @@
         "type": "heading",
         "size": 1,
         "id": "main-heading",
-        "defaultValue": "Square"
+        "defaultValue": "<p style='text-align:center;'>Square</p>"
+      },
+      {
+        "type": "text",
+        "defaultValue": "<p style='text-align:center;'>Welcome to Square 5.0! A lot has been changed in this version! See the app store changelog for details. <br><br> One note: language settings have been reset so please select your language again below! If you have any issues please contact me at <a href='http://www.turnervink.com'>www.turnervink.com</a>.</p>"
+
       }
     ]
   },
@@ -19,6 +24,35 @@
         "size": 4,
         "id": "weather-heading",
         "defaultValue": "Weather"
+      },
+      {
+        "type": "select",
+        "messageKey": "CfgKeyWeatherMode",
+        "label": "Weather:",
+        "defaultValue": "0",
+        "options": [
+          {
+            "label": "Show",
+            "value": "0"
+          },
+          {
+            "label": "Hide",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyUseCelsius",
+        "label": "Use Celsius",
+        "defaultValue": false
+      },
+      {
+        "type": "input",
+        "messageKey": "CfgKeyWeatherLocation",
+        "label": "Location:",
+        "description": "Leave blank to use GPS",
+        "defaultValue": ""
       }
     ]
   },
@@ -73,12 +107,25 @@
         "size": 4,
         "id": "bluetooth-heading",
         "defaultValue": "Bluetooth"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyVibeOnDisconnect",
+        "label": "Vibrate on Disconnect",
+        "defaultValue": true
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyVibeOnConnect",
+        "label": "Vibrate on Connect",
+        "defaultValue": true
       }
     ]
   },
 
   {
     "type": "section",
+    "capabilities": ["COLOR"],
     "items": [
       {
         "type": "heading",
@@ -99,13 +146,20 @@
 				"defaultValue": "00ff00",
 				"label": "Text colour",
 				"sunlight": true
-			}
-    ],
-    "capabilities": ["COLOR"]
+			},
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyShowSeconds",
+        "label": "Show Seconds",
+        "defaultValue": false
+      }
+    ]
+
   },
 
   {
     "type": "section",
+    "capabilities": ["BW"],
     "items": [
       {
         "type": "heading",
@@ -118,13 +172,20 @@
         "messageKey": "CfgKeyInvertColours",
         "label": "Invert Colours",
         "defaultValue": false
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyShowSeconds",
+        "label": "Show Seconds",
+        "defaultValue": false
       }
-    ],
-    "capabilities": ["BW"]
+    ]
+
   },
 
   {
     "type": "section",
+    "capabilities": ["HEALTH"],
     "items": [
       {
         "type": "heading",
@@ -153,6 +214,15 @@
         ]
       },
       {
+
+        "type": "toggle",
+        "messageKey": "CfgKeyEnableHealth",
+        "label": "Enable Health",
+        "description": "Turn this switch off to stop the 'Enable Health' warning",
+        "defaultValue": true
+
+      },
+      {
         "type": "toggle",
         "messageKey": "CfgKeyUseAutomaticStepGoal",
         "label": "Use automatic goal",
@@ -168,12 +238,13 @@
         "step": 1000,
         "defaultValue": 10000
       }
-    ],
-    "capabilities": ["HEALTH"]
+    ]
+
   },
 
   {
     "type": "section",
+    "capabilities": ["NOT_HEALTH"],
     "items": [
       {
         "type": "heading",
@@ -197,12 +268,13 @@
           }
         ]
       }
-    ],
-    "capabilities": ["BW"]
+    ]
+
   },
 
   {
     "type": "section",
+    "capabilities": ["COLOR"],
     "items": [
       {
         "type": "heading",
@@ -231,7 +303,7 @@
       {
         "type": "input",
         "messageKey": "CfgKeyNightModeEnd",
-        "defaultValue": 20,
+        "defaultValue": 8,
         "label": "Night Mode End Hour (0 - 24)",
 				"attributes": {
 					"limit": 2,
@@ -254,11 +326,21 @@
 				"label": "Text colour",
 				"sunlight": true
 			}
-    ],
-    "capabilities": ["COLOR"]
+    ]
+
   },
 
-
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "button",
+        "defaultValue": "Donate",
+        "id": "donateButton",
+        "description": "<p style='text-align:center;'>Before you tap save, consider donating to support further development!</p>"
+      }
+    ]
+  },
 
   {
     "type": "submit",
