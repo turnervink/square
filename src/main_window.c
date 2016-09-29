@@ -37,6 +37,13 @@ void update_time() {
   static char date_num_buffer[] = "DD";
   static char full_date_buffer[] = "WWW DD MMM";
 
+  #ifdef SCREENSHOT_MODE
+    if (show_seconds == 1) {
+      snprintf(time_buffer, sizeof("00:00:00"), "%s", "12:35:01");
+    } else {
+      snprintf(time_buffer, sizeof("00:00:00"), "%s", "12:35");
+    }
+  #else
   if (show_seconds == 1) {
     if (clock_is_24h_style() == true) {
   		strftime(time_buffer, sizeof("00:00:00"), "%H:%M:%S", tick_time);
@@ -50,25 +57,25 @@ void update_time() {
   		strftime(time_buffer, sizeof("00:00:00"), "%I:%M", tick_time);
   	}
   }
-
-
-  #ifndef SCREENSHOT_MODE
-	text_layer_set_text(time_layer, time_buffer);
   #endif
+
+	text_layer_set_text(time_layer, time_buffer);
 
   int month = tick_time->tm_mon;
 	int weekday = tick_time->tm_wday;
   strftime(date_num_buffer, sizeof("DD"), "%d", tick_time);
 
+  #ifdef SCREENSHOT_MODE
+    snprintf(full_date_buffer, sizeof(full_date_buffer), "%s", "THU APR 2");
+  #else
   if (euro_date == 1) {
     snprintf(full_date_buffer, sizeof(full_date_buffer), "%s %s %s", dayNames[language][weekday], date_num_buffer, monthNames[language][month]);
   } else {
     snprintf(full_date_buffer, sizeof(full_date_buffer), "%s %s %s", dayNames[language][weekday], monthNames[language][month], date_num_buffer);
   }
-
-  #ifndef SCREENSHOT_MODE
-  text_layer_set_text(date_layer, full_date_buffer);
   #endif
+
+  text_layer_set_text(date_layer, full_date_buffer);
 
   // Mark the middle bar dirty to be sure we update the colours when entering night mode
   layer_mark_dirty(middle_bar_layer);
@@ -89,17 +96,11 @@ static void main_window_load(Window *window) {
   time_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(time_layer, GColorClear);
   text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
-  #ifdef SCREENSHOT_MODE
-  text_layer_set_text(time_layer, "12:35");
-  #endif
 
   date_layer = text_layer_create(GRect(0, 0, bounds.size.h, bounds.size.h));
   text_layer_set_background_color(date_layer, GColorClear);
   text_layer_set_text_alignment(date_layer, GTextAlignmentCenter);
   text_layer_set_font(date_layer, date_font);
-  #ifdef SCREENSHOT_MODE
-  text_layer_set_text(date_layer, "SAT SEP 24");
-  #endif
 
   middle_bar_layer = layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
   layer_set_update_proc(middle_bar_layer, middle_bar_update_proc);
