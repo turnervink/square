@@ -294,7 +294,7 @@
       {
         "type": "input",
         "messageKey": "CfgKeyNightModeEnd",
-        "defaultValue": 20,
+        "defaultValue": 8,
         "label": "Night Mode End Hour (0 - 24)",
 				"attributes": {
 					"limit": 2,
