@@ -28,9 +28,6 @@ static void init() {
   battery_state_service_subscribe(battery_handler);
   bluetooth_connection_service_subscribe(bluetooth_handler);
 
-  #ifdef PBL_HEALTH
-  health_service_events_subscribe(health_handler, NULL);
-  #endif
 
   init_messaging();
 

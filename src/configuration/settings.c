@@ -95,6 +95,13 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyMiddleBarMode, middle_bar_mode);
     }
 
+    if (i == CfgKeyEnableHealth) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for enable_health");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyEnableHealth, enable_health);
+    }
+
     if (i == CfgKeyUseAutomaticStepGoal) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for auto_step_goal");
@@ -191,6 +198,7 @@ void load_settings() {
       inv_colours = 0;
       show_seconds = 0;
       middle_bar_mode = 1;
+      enable_health = 1;
       auto_step_goal = 1;
       use_night_mode = 0;
       night_start_hour = 20;
@@ -278,6 +286,13 @@ void load_settings() {
           APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for middle_bar_mode");
           #endif
           middle_bar_mode = persist_read_int(MESSAGE_KEY_CfgKeyMiddleBarMode);
+        }
+
+        if (i == CfgKeyEnableHealth) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loaded stored value for enable_health");
+          #endif
+          enable_health = persist_read_int(MESSAGE_KEY_CfgKeyEnableHealth);
         }
 
         if (i == CfgKeyUseAutomaticStepGoal) {

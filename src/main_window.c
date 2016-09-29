@@ -135,6 +135,12 @@ static void main_window_load(Window *window) {
   bool connected = bluetooth_connection_service_peek();
 
   bluetooth_status_update(connected, true);
+
+  #ifdef PBL_HEALTH
+  if (enable_health) {
+    health_service_events_subscribe(health_handler, NULL);
+  }
+  #endif
 }
 
 static void main_window_unload(Window *window) {

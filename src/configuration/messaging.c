@@ -6,6 +6,7 @@
 #include "../weather/weather.h"
 #include "../lang/lang.h"
 #include "../logs.h"
+#include "../middle_bar.h"
 
 static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Received messageKeys");
@@ -165,6 +166,21 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting middle_bar_mode");
       #endif
       middle_bar_mode = atoi(t->value->cstring);
+    }
+
+    if (true_key == CfgKeyEnableHealth) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting enable_health");
+      #endif
+      enable_health = t->value->int32;
+
+      #ifdef PBL_HEALTH
+      if (enable_health) {
+        health_service_events_subscribe(health_handler, NULL);
+      } else {
+        health_service_events_unsubscribe();
+      }
+      #endif
     }
 
     if (true_key == CfgKeyUseAutomaticStepGoal) {

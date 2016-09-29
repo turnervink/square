@@ -214,6 +214,15 @@
         ]
       },
       {
+
+        "type": "toggle",
+        "messageKey": "CfgKeyEnableHealth",
+        "label": "Enable Health",
+        "description": "Turn this switch off to stop the 'Enable Health' warning",
+        "defaultValue": true
+
+      },
+      {
         "type": "toggle",
         "messageKey": "CfgKeyUseAutomaticStepGoal",
         "label": "Use automatic goal",

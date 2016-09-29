@@ -101,7 +101,7 @@ function locationError(err) {
 function getWeather() {
 	console.log("Getting weather");
 	navigator.geolocation.getCurrentPosition(
-		locationError,
+		locationSuccess,
 		locationError,
 		{timeout: 15000, maximumAge: 60000}
 	);

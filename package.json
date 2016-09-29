@@ -44,6 +44,7 @@
       "CfgKeyInvertColours",
       "CfgKeyShowSeconds",
       "CfgKeyMiddleBarMode",
+      "CfgKeyEnableHealth",
       "CfgKeyUseAutomaticStepGoal",
       "CfgKeyManualStepGoal",
       "CfgKeyUseNightMode",
