@@ -6,12 +6,28 @@
         "type": "heading",
         "size": 1,
         "id": "main-heading",
-        "defaultValue": "Square"
+        "defaultValue": "<p style='text-align:center;'>Square</p>"
       },
       {
         "type": "text",
         "defaultValue": "<p style='text-align:center;'>Welcome to Square 5.0! A lot has been changed in this version! See the app store changelog for details. <br><br> One note: language settings have been reset so please select your language again below! If you have any issues please contact me at <a href='http://www.turnervink.com'>www.turnervink.com</a>.</p>"
 
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "capabilities": ["PLATFORM_DIORITE"],
+    "items": [
+      {
+        "type": "heading",
+        "size": 3,
+        "defaultValue": "<p style='text-align:center;'>Hey Pebble 2 Users!</p>"
+      },
+      {
+        "type": "text",
+        "defaultValue": "<p style='text-align:center;'>Currently the step goal options at the bottom of this page are showing up even when the middle bar is showing the battery level or is static. If you want to see your steps please set 'Middle bar shows' to 'Step goal progress'! If you have any issues please get in touch through my website above or the Pebble App Store!</p>"
       }
     ]
   },
