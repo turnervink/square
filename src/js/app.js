@@ -81,12 +81,27 @@ function locationSuccess(pos) {
 
 function locationError(err) {
   console.log('Error requesting location!');
+
+  var dictionary = {
+    "CfgKeyWeatherError": "error",
+  };
+
+  Pebble.sendAppMessage(dictionary,
+    function(e) {
+      console.log("Weather info sent to Pebble successfully!");
+      console.log(e);
+    },
+    function(e) {
+      console.log("Error sending weather info to Pebble!");
+      console.log(e);
+    }
+  );
 }
 
 function getWeather() {
 	console.log("Getting weather");
 	navigator.geolocation.getCurrentPosition(
-		locationSuccess,
+		locationError,
 		locationError,
 		{timeout: 15000, maximumAge: 60000}
 	);

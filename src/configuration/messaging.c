@@ -53,19 +53,19 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       if (language == 0) { // en
         snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Error");
         snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Error");
-        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "City not found");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "No data");
       } else if (language == 1) { // fr
         snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Erreur");
         snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Erreur");
-        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "ville introuvable");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "Pas de données");
       } else if (language == 2) { // es
         snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Error");
         snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Error");
-        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "hay tal ciudad");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "Sin datos");
       } else if (language == 3) { // de
         snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Fehler");
         snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Fehler");
-        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "keine solche Stadt");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "Keine Daten");
       }
 
       conf_vibe = false;

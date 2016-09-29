@@ -18,22 +18,6 @@
 
   {
     "type": "section",
-    "capabilities": ["PLATFORM_DIORITE"],
-    "items": [
-      {
-        "type": "heading",
-        "size": 3,
-        "defaultValue": "<p style='text-align:center;'>Hey Pebble 2 Users!</p>"
-      },
-      {
-        "type": "text",
-        "defaultValue": "<p style='text-align:center;'>Currently the step goal options at the bottom of this page are showing up even when the middle bar is showing the battery level or is static. If you want to see your steps please set 'Middle bar shows' to 'Step goal progress'! If you have any issues please get in touch through my website above or the Pebble App Store!</p>"
-      }
-    ]
-  },
-
-  {
-    "type": "section",
     "items": [
       {
         "type": "heading",

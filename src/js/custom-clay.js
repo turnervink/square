@@ -61,16 +61,20 @@ module.exports = function(minified) {
     showWeatherSettings.call(weatherModeDropdown); // Call on page load
     weatherModeDropdown.on("change", showWeatherSettings); // Call on change
 
-    var nightModeToggle = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
-    showNightModeSettings.call(nightModeToggle);
-    nightModeToggle.on("change", showNightModeSettings);
+    if (clayConfig.getItemByMessageKey("CfgKeyUseNightMode")) {
+      var nightModeToggle = clayConfig.getItemByMessageKey("CfgKeyUseNightMode");
+      showNightModeSettings.call(nightModeToggle);
+      nightModeToggle.on("change", showNightModeSettings);
+    }
 
     var middleBarDropdown = clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode");
     showHealthSettings.call(middleBarDropdown);
     middleBarDropdown.on("change", showHealthSettings);
 
-    var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
-    autoGoalToggle.on("change", showStepGoalSlider);
+    if (clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal")) {
+      var autoGoalToggle = clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal");
+      autoGoalToggle.on("change", showStepGoalSlider);
+    }
 
   });
 
