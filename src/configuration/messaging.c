@@ -235,7 +235,8 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
     t = dict_read_next(iter);
   }
 
-  // All done receiving settings, vibrate to notify the user
+  // All done receiving and saving settings, vibrate to notify the user
+  save_settings();
   if (conf_vibe) vibes_double_pulse();
 
   // Then update everything that needs updating

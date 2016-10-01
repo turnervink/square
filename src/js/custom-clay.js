@@ -37,10 +37,11 @@ module.exports = function(minified) {
 
   function disableHealthSettings() {
     if (!this.get()) {
-      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
-      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").disable();
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").disable();
     } else {
-      showHealthSettings.call(clayConfig.getItemByMessageKey("CfgKeyMiddleBarMode"));
+      clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").enable();
+      clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").enable();
     }
   }
 
@@ -50,12 +51,10 @@ module.exports = function(minified) {
 
     if (this.get() == 2) {
       clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").show();
-      clayConfig.getItemByMessageKey("CfgKeyEnableHealth").show();
       //disableHealthSettings.call(enableHealthToggle);
       showStepGoalSlider.call(autoGoalToggle);
     } else {
       clayConfig.getItemByMessageKey("CfgKeyManualStepGoal").hide();
-      clayConfig.getItemByMessageKey("CfgKeyEnableHealth").hide();
       clayConfig.getItemByMessageKey("CfgKeyUseAutomaticStepGoal").hide();
     }
   }
