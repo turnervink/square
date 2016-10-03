@@ -27,6 +27,7 @@ static void init() {
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   battery_state_service_subscribe(battery_handler);
   bluetooth_connection_service_subscribe(bluetooth_handler);
+  accel_tap_service_subscribe(accel_handler);
 
 
   init_messaging();
