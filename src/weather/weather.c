@@ -49,13 +49,15 @@ void animate_weather() {
   }
   #endif
 
-  GRect temperature_offscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), -15, 144, temperature_size.h);
-  GRect conditions_offscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(195, 183), 144, conditions_size.h);
+  GRect temperature_offscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), 0 - conditions_size.h, 144, temperature_size.h);
+  GRect conditions_offscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), bounds.size.h + conditions_size.h, 144, conditions_size.h);
   GRect temperature_onscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + round_temp_offset, 0), 144, temperature_size.h);
   GRect conditions_onscreen =  GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h);
 
   animate_layer(text_layer_get_layer(temperature_layer), &temperature_offscreen, &temperature_onscreen, 1000, 0);
   animate_layer(text_layer_get_layer(temperature_layer), &temperature_onscreen, &temperature_offscreen, 1000, 5000);
+  animate_layer(text_layer_get_layer(conditions_layer), &conditions_offscreen, &conditions_onscreen, 1000, 0);
+  animate_layer(text_layer_get_layer(conditions_layer), &conditions_onscreen, &conditions_offscreen, 1000, 5000);
 }
 
 void accel_handler(AccelAxisType axis, int32_t direction) {
@@ -112,8 +114,8 @@ void size_weather() {
 
   // Set frame to offscreen if shaking to show
   if (weather_mode == 1) {
-    layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), -15, 144, temperature_size.h));
-    layer_set_frame(text_layer_get_layer(conditions_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(195, 183), 144, conditions_size.h));
+    layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), 0 - conditions_size.h, 144, temperature_size.h));
+    layer_set_frame(text_layer_get_layer(conditions_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), bounds.size.h + conditions_size.h, 144, conditions_size.h));
   } else {
     layer_set_frame(text_layer_get_layer(temperature_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + round_temp_offset, 0), 144, temperature_size.h));
     layer_set_frame(text_layer_get_layer(conditions_layer), GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h));
