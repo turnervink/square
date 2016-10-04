@@ -8,6 +8,8 @@ void bluetooth_status_update(bool connected, bool startup) {
   if (!connected) {
     if (vibe_disconnect == 1 && startup == false) vibes_long_pulse();
 
+    weather_mode = 0;
+
     if (language == 0) {
       text_layer_set_text(temperature_layer, "NO");
       text_layer_set_text(conditions_layer, "CONNECTION");
@@ -31,6 +33,7 @@ void bluetooth_status_update(bool connected, bool startup) {
     if (vibe_connect == 1 && startup == false) vibes_double_pulse();
 
     if (startup == false) update_weather(); // Fetch weather now that phone is connected
+    weather_mode = persist_read_int(MESSAGE_KEY_CfgKeyWeatherMode);
   }
 }
 

@@ -7,7 +7,6 @@ char temp_buffer[15];
 char temp_c_buffer[15];
 char conditions_buffer[100];
 
-bool tapped = false;
 bool scheduled = false;
 
 void on_animation_stopped(Animation *anim, bool finished, void *context) {
@@ -33,7 +32,7 @@ void animate_layer(Layer *layer, GRect *start, GRect *finish, int duration, int 
 
     //Start animation!
     animation_schedule((Animation*) anim);
-    scheduled = true;
+    scheduled = true; // Prevent multiple animations from happening at once
 }
 
 void animate_weather() {
@@ -69,13 +68,8 @@ void animate_weather() {
 }
 
 void accel_handler(AccelAxisType axis, int32_t direction) {
-  APP_LOG(APP_LOG_LEVEL_WARNING, "Tap!");
-  if (weather_mode == 1 && tapped == false) {
-    //APP_LOG(APP_LOG_LEVEL_WARNING, "Setting tapped to true");
-    //tapped = true;
+  if (weather_mode == 1) {
     animate_weather();
-    //APP_LOG(APP_LOG_LEVEL_WARNING, "Setting tapped to false");
-    //tapped = false;
   }
 }
 
