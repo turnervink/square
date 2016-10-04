@@ -7,9 +7,13 @@ char temp_buffer[15];
 char temp_c_buffer[15];
 char conditions_buffer[100];
 
+bool tapped = false;
+bool scheduled = false;
+
 void on_animation_stopped(Animation *anim, bool finished, void *context) {
     //Free the memory used by the Animation
     property_animation_destroy((PropertyAnimation*) anim);
+    scheduled = false;
 }
 
 void animate_layer(Layer *layer, GRect *start, GRect *finish, int duration, int delay) {
@@ -29,6 +33,7 @@ void animate_layer(Layer *layer, GRect *start, GRect *finish, int duration, int 
 
     //Start animation!
     animation_schedule((Animation*) anim);
+    scheduled = true;
 }
 
 void animate_weather() {
@@ -54,21 +59,28 @@ void animate_weather() {
   GRect temperature_onscreen = GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(time_frame.origin.y - temperature_size.h + round_temp_offset, 0), 144, temperature_size.h);
   GRect conditions_onscreen =  GRect(PBL_IF_ROUND_ELSE(18, 0), PBL_IF_ROUND_ELSE(date_frame.origin.y + date_size.h, bounds.size.h - conditions_size.h - 5), 144, conditions_size.h);
 
-  animate_layer(text_layer_get_layer(temperature_layer), &temperature_offscreen, &temperature_onscreen, 1000, 0);
-  animate_layer(text_layer_get_layer(temperature_layer), &temperature_onscreen, &temperature_offscreen, 1000, 5000);
-  animate_layer(text_layer_get_layer(conditions_layer), &conditions_offscreen, &conditions_onscreen, 1000, 0);
-  animate_layer(text_layer_get_layer(conditions_layer), &conditions_onscreen, &conditions_offscreen, 1000, 5000);
+  if (!scheduled) {
+    animate_layer(text_layer_get_layer(temperature_layer), &temperature_offscreen, &temperature_onscreen, 1000, 0);
+    animate_layer(text_layer_get_layer(conditions_layer), &conditions_offscreen, &conditions_onscreen, 1000, 0);
+
+    animate_layer(text_layer_get_layer(temperature_layer), &temperature_onscreen, &temperature_offscreen, 1000, 5000);
+    animate_layer(text_layer_get_layer(conditions_layer), &conditions_onscreen, &conditions_offscreen, 1000, 5000);
+  }
 }
 
 void accel_handler(AccelAxisType axis, int32_t direction) {
   APP_LOG(APP_LOG_LEVEL_WARNING, "Tap!");
-  if (weather_mode == 1) {
+  if (weather_mode == 1 && tapped == false) {
+    //APP_LOG(APP_LOG_LEVEL_WARNING, "Setting tapped to true");
+    //tapped = true;
     animate_weather();
+    //APP_LOG(APP_LOG_LEVEL_WARNING, "Setting tapped to false");
+    //tapped = false;
   }
 }
 
 void update_weather() {
-  if (weather_mode == 0) { // If displaying weather, fetch it
+  if (weather_mode != 2) { // If displaying weather, fetch it
     APP_LOG(APP_LOG_LEVEL_INFO, "Requesting weather update");
 
     // Blank out old weather info (Can/should we clear the buffer too?)
