@@ -8,7 +8,7 @@
 #include "logs.h"
 
 Window *main_window;
-TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer;
+TextLayer *time_layer, *date_layer, *temperature_layer, *conditions_layer, *top_bt_layer, *btm_bt_layer;
 Layer *middle_bar_layer;
 GFont time_font, small_time_font, date_font, lg_weather_font, sm_weather_font;
 
@@ -120,11 +120,24 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(conditions_layer, GTextAlignmentCenter);
   text_layer_set_font(conditions_layer, lg_weather_font);
 
+  top_bt_layer = text_layer_create(GRect(0, 0, 144, 168));
+  text_layer_set_background_color(top_bt_layer, GColorClear);
+  text_layer_set_text_alignment(top_bt_layer, GTextAlignmentCenter);
+  text_layer_set_font(top_bt_layer, lg_weather_font);
+
+  btm_bt_layer = text_layer_create(GRect(0, 0, 144, 168));
+  text_layer_set_overflow_mode(btm_bt_layer, GTextOverflowModeWordWrap);
+  text_layer_set_background_color(btm_bt_layer, GColorClear);
+  text_layer_set_text_alignment(btm_bt_layer, GTextAlignmentCenter);
+  text_layer_set_font(btm_bt_layer, lg_weather_font);
+
   layer_add_child(window_layer, text_layer_get_layer(time_layer));
   layer_add_child(window_layer, text_layer_get_layer(date_layer));
   layer_add_child(window_layer, middle_bar_layer);
   layer_add_child(window_layer, text_layer_get_layer(temperature_layer));
   layer_add_child(window_layer, text_layer_get_layer(conditions_layer));
+  layer_add_child(window_layer, text_layer_get_layer(top_bt_layer));
+  layer_add_child(window_layer, text_layer_get_layer(btm_bt_layer));
 
   load_settings();
 

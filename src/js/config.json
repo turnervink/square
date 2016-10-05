@@ -36,6 +36,10 @@
             "value": "0"
           },
           {
+            "label": "Shake to show",
+            "value": "1"
+          },
+          {
             "label": "Hide",
             "value": "2"
           }
