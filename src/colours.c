@@ -63,6 +63,8 @@ void update_colours() {
     text_layer_set_text_color(date_layer, GColorFromHEX(night_text_colour));
     text_layer_set_text_color(temperature_layer, GColorFromHEX(night_text_colour));
     text_layer_set_text_color(conditions_layer, GColorFromHEX(night_text_colour));
+    text_layer_set_text_color(top_bt_layer, GColorFromHEX(night_text_colour));
+    text_layer_set_text_color(btm_bt_layer, GColorFromHEX(night_text_colour));
 
     window_set_background_color(main_window, GColorFromHEX(night_background_colour));
   } else {
@@ -71,6 +73,8 @@ void update_colours() {
     text_layer_set_text_color(date_layer, GColorFromHEX(text_colour));
     text_layer_set_text_color(temperature_layer, GColorFromHEX(text_colour));
     text_layer_set_text_color(conditions_layer, GColorFromHEX(text_colour));
+    text_layer_set_text_color(top_bt_layer, GColorFromHEX(text_colour));
+    text_layer_set_text_color(btm_bt_layer, GColorFromHEX(text_colour));
 
     window_set_background_color(main_window, GColorFromHEX(background_colour));
   }
