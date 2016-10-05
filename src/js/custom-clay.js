@@ -2,7 +2,7 @@ module.exports = function(minified) {
   var clayConfig = this;
 
   function showWeatherSettings() {
-    if (this.get() == 0) {
+    if (this.get() != 2) {
       clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
       clayConfig.getItemByMessageKey("CfgKeyUseCelsius").show();
     } else {
