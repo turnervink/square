@@ -67,6 +67,10 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
         snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Fehler");
         snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Fehler");
         snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "Keine Daten");
+      } else if (language == 4) {
+        snprintf(temp_buffer, sizeof(temp_buffer), "%s", "Errore");
+        snprintf(temp_c_buffer, sizeof(temp_c_buffer), "%s", "Errore");
+        snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", "Nessun dato");
       }
 
       conf_vibe = false;

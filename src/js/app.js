@@ -144,6 +144,8 @@ Pebble.addEventListener('webviewclosed', function(e) {
     lang = "es"
   } else if (lang === "3") {
     lang = "de"
+  } else if (lang === "4") {
+    lang = "it"
   }
 
   localStorage.lang = lang;
