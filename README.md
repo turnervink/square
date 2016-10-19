@@ -8,7 +8,8 @@ www.turnervink.com
 
 ## Features
 - Offline configuration with Clay
-- Optional weather in four languages (English, French, Spanish, and German)
+- Three options for weather display (always shown, flick wrist to show, and hidden)
+- Supports five languages (English, French, Spanish, German, and Italian)
 - Two date formats (THU APR 2, THU 2 APR)
 - Pick text and background colours on Basalt and Chalk
   - Invert colour scheme on Aplite and Diorite
