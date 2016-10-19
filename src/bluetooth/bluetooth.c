@@ -21,6 +21,9 @@ void bluetooth_status_update(bool connected, bool startup) {
     } else if (language == 3) {
       text_layer_set_text(top_bt_layer, "keine");
       text_layer_set_text(btm_bt_layer, "Verbindung");
+    } else if (language == 4) {
+      text_layer_set_text(top_bt_layer, "Nessuna");
+      text_layer_set_text(btm_bt_layer, "connessione");
     } else {
       text_layer_set_text(top_bt_layer, "NO");
       text_layer_set_text(btm_bt_layer, "CONNECTION");
