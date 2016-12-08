@@ -88,6 +88,13 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyShowSeconds, show_seconds);
     }
 
+    if (i == CfgKeyLeadingZero) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for leading_zero");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyLeadingZero, leading_zero);
+    }
+
     if (i == CfgKeyMiddleBarMode) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for middle_bar_mode");
@@ -197,6 +204,7 @@ void load_settings() {
       text_colour = 0x00ff00;
       inv_colours = 0;
       show_seconds = 0;
+      leading_zero = 1;
       middle_bar_mode = 1;
       enable_health = 1;
       auto_step_goal = 1;
@@ -279,6 +287,13 @@ void load_settings() {
           APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for show_seconds");
           #endif
           show_seconds = persist_read_int(MESSAGE_KEY_CfgKeyShowSeconds);
+        }
+
+        if (i == CfgKeyShowSeconds) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for leading_zero");
+          #endif
+          leading_zero = persist_read_int(MESSAGE_KEY_CfgKeyLeadingZero);
         }
 
         if (i == CfgKeyMiddleBarMode) {

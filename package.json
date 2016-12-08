@@ -43,6 +43,7 @@
       "CfgKeyTextColour",
       "CfgKeyInvertColours",
       "CfgKeyShowSeconds",
+      "CfgKeyLeadingZero",
       "CfgKeyMiddleBarMode",
       "CfgKeyEnableHealth",
       "CfgKeyUseAutomaticStepGoal",

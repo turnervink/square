@@ -165,6 +165,13 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       show_seconds = t->value->int32;
     }
 
+    if (true_key == CfgKeyLeadingZero) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting leading_zero");
+      #endif
+      leading_zero = t->value->int32;
+    }
+
     if (true_key == CfgKeyMiddleBarMode) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting middle_bar_mode");

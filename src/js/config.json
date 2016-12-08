@@ -159,6 +159,12 @@
         "messageKey": "CfgKeyShowSeconds",
         "label": "Show Seconds",
         "defaultValue": false
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyLeadingZero",
+        "label": "Show Leading Zero (12h time only)",
+        "defaultValue": true
       }
     ]
 

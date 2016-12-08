@@ -59,7 +59,11 @@ void update_time() {
   }
   #endif
 
-	text_layer_set_text(time_layer, time_buffer);
+  if (leading_zero == 0 && clock_is_24h_style() == false) {
+    text_layer_set_text(time_layer, time_buffer+(('0' == time_buffer[0])?1:0));
+  } else {
+    text_layer_set_text(time_layer, time_buffer);
+  }
 
   int month = tick_time->tm_mon;
 	int weekday = tick_time->tm_wday;
