@@ -80,22 +80,28 @@ function locationSuccess(pos) {
 }
 
 function locationError(err) {
-  console.log('Error requesting location!');
+  if (location != '') {
+    console.log('Error requesting location! Manual location entered.');
 
-  var dictionary = {
-    "CfgKeyWeatherError": "error",
-  };
+    locationSuccess(null);
+  } else {
+    console.log('Error requesting location! No manual location entered.');
 
-  Pebble.sendAppMessage(dictionary,
-    function(e) {
-      console.log("Location error info sent to Pebble successfully!");
-      console.log(e);
-    },
-    function(e) {
-      console.log("Could not send location error info to Pebble!");
-      console.log(e);
-    }
-  );
+    var dictionary = {
+      "CfgKeyWeatherError": "error",
+    };
+
+    Pebble.sendAppMessage(dictionary,
+      function(e) {
+        console.log("Location error info sent to Pebble successfully!");
+        console.log(e);
+      },
+      function(e) {
+        console.log("Could not send location error info to Pebble!");
+        console.log(e);
+      }
+    );
+  }
 }
 
 function getWeather() {
