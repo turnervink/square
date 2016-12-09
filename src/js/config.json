@@ -113,18 +113,24 @@
         "type": "heading",
         "size": 4,
         "id": "bluetooth-heading",
-        "defaultValue": "Bluetooth"
+        "defaultValue": "Vibration"
+      },
+      {
+        "type": "toggle",
+        "messageKey": "CfgKeyHourlyVibe",
+        "label": "Vibrate Hourly",
+        "defaultValue": false
       },
       {
         "type": "toggle",
         "messageKey": "CfgKeyVibeOnDisconnect",
-        "label": "Vibrate on Disconnect",
+        "label": "Vibrate on Bluetooth Disconnect",
         "defaultValue": true
       },
       {
         "type": "toggle",
         "messageKey": "CfgKeyVibeOnConnect",
-        "label": "Vibrate on Connect",
+        "label": "Vibrate on Bluetooth Reconnect",
         "defaultValue": true
       }
     ]

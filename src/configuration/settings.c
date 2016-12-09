@@ -46,6 +46,13 @@ void save_settings() {
       persist_write_int(MESSAGE_KEY_CfgKeyEuropeanDate, euro_date);
     }
 
+    if (i == CfgKeyHourlyVibe) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for hourly_vibe");
+      #endif
+      persist_write_int(MESSAGE_KEY_CfgKeyHourlyVibe, hourly_vibe);
+    }
+
     if (i == CfgKeyVibeOnDisconnect) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Saving value for vibe_disconnect");
@@ -198,6 +205,7 @@ void load_settings() {
       use_celsius = 0;
       language = 0;
       euro_date = 0;
+      hourly_vibe = 0;
       vibe_disconnect = 1;
       vibe_connect = 1;
       background_colour = 0x000000;
@@ -245,6 +253,13 @@ void load_settings() {
           APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for euro_date");
           #endif
           euro_date = persist_read_int(MESSAGE_KEY_CfgKeyEuropeanDate);
+        }
+
+        if (i == CfgKeyHourlyVibe) {
+          #ifdef DEBUG_MODE
+          APP_LOG(APP_LOG_LEVEL_INFO, "Loading stored value for hourly_vibe");
+          #endif
+          hourly_vibe = persist_read_int(MESSAGE_KEY_CfgKeyHourlyVibe);
         }
 
         if (i == CfgKeyVibeOnDisconnect) {

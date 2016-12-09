@@ -123,6 +123,13 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
       euro_date = t->value->int32;
     }
 
+    if (true_key == CfgKeyHourlyVibe) {
+      #ifdef DEBUG_MODE
+      APP_LOG(APP_LOG_LEVEL_INFO, "Setting hourly_vibe");
+      #endif
+      hourly_vibe = t->value->int32;
+    }
+
     if (true_key == CfgKeyVibeOnDisconnect) {
       #ifdef DEBUG_MODE
       APP_LOG(APP_LOG_LEVEL_INFO, "Setting vibe_disconnect");

@@ -12,6 +12,7 @@ typedef enum {
   CfgKeyWeatherLocation,
   CfgKeyLanguage,
   CfgKeyEuropeanDate,
+  CfgKeyHourlyVibe,
   CfgKeyVibeOnDisconnect,
   CfgKeyVibeOnConnect,
   CfgKeyBackgroundColour,
@@ -41,7 +42,7 @@ int middle_bar_mode;
 int manual_step_goal, enable_health;
 int last_weather_mode, weather_mode;
 
-int euro_date, inv_colours, auto_step_goal, use_night_mode, vibe_disconnect, vibe_connect, show_seconds, leading_zero, use_celsius;
+int euro_date, inv_colours, auto_step_goal, use_night_mode, hourly_vibe, vibe_disconnect, vibe_connect, show_seconds, leading_zero, use_celsius;
 
 void save_settings();
 void load_settings();
