@@ -7,6 +7,10 @@
         "size": 1,
         "id": "main-heading",
         "defaultValue": "<p style='text-align:center;'>Square</p>"
+      },
+      {
+        "type": "text",
+        "defaultValue": "<p style='text-align:center;'>5.3</p>"
       }
     ]
   },
