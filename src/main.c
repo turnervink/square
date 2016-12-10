@@ -7,8 +7,20 @@
 #include "bluetooth/bluetooth.h"
 #include "colours.h"
 
+static const uint32_t const segments[] = {200, 100, 200, 100, 200};
+VibePattern hour_chime = {
+  .durations = segments,
+  .num_segments = ARRAY_LENGTH(segments),
+};
+
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
+
+  if (tick_time->tm_min == 0 && tick_time->tm_sec == 0) {
+    if (hourly_vibe == 1 && quiet_time_is_active() == false) {
+      vibes_enqueue_custom_pattern(hour_chime);
+    }
+  }
 
   if (tick_time->tm_min % 30 == 0 && tick_time->tm_sec == 0) {
     update_weather();

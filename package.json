@@ -37,6 +37,7 @@
       "CfgKeyWeatherLocation",
       "CfgKeyLanguage",
       "CfgKeyEuropeanDate",
+      "CfgKeyHourlyVibe",
       "CfgKeyVibeOnDisconnect",
       "CfgKeyVibeOnConnect",
       "CfgKeyBackgroundColour",
