@@ -7,7 +7,7 @@
   ],
   "private": true,
   "dependencies": {
-    "pebble-clay": "^1.0.1"
+    "pebble-clay": "^1.0.4"
   },
   "pebble": {
     "displayName": "Square",
@@ -82,7 +82,6 @@
           "type": "font"
         },
         {
-
           "file": "fonts/Square.ttf",
           "name": "FONT_SQUARE_18",
           "type": "font"
