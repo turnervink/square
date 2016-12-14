@@ -3,6 +3,8 @@ var customClay = require('./custom-clay');
 var clayConfig = require('./config.json');
 var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
+var apiKey = require('./apikey');
+
 // ---------- Weather ---------- //
 
 var lang;
@@ -24,12 +26,12 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=2874bea34ea1f91820fa07af69939eea&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getKey() + '&lang=' + lang;
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=2874bea34ea1f91820fa07af69939eea&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + 'lang=' + lang;
   }
 
   console.log('URL is ' + url);
@@ -40,6 +42,7 @@ function locationSuccess(pos) {
       console.log("Parsing JSON");
 
       var json = JSON.parse(responseText); // Parse JSON response
+      console.log("JSON: " + json);
 
       if (!json.main) {
         var dictionary = {
