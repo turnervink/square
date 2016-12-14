@@ -34,8 +34,6 @@ function locationSuccess(pos) {
     var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + '&lang=' + lang;
   }
 
-  console.log('URL is ' + url);
-
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET',
     function(responseText) {
