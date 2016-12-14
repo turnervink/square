@@ -40,7 +40,6 @@ function locationSuccess(pos) {
       console.log("Parsing JSON");
 
       var json = JSON.parse(responseText); // Parse JSON response
-      console.log("JSON: " + json);
 
       if (!json.main) {
         var dictionary = {
