@@ -254,8 +254,10 @@ static void inbox_recv_handler(DictionaryIterator *iter, void *ctx) {
   }
 
   // All done receiving and saving settings, vibrate to notify the user
-  save_settings();
-  if (conf_vibe) vibes_double_pulse();
+  if (conf_vibe) {
+    save_settings();
+    vibes_double_pulse();
+  }
 
   // Then update everything that needs updating
   update_colours();
