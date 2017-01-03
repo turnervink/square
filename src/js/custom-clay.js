@@ -5,9 +5,11 @@ module.exports = function(minified) {
     if (this.get() != 2) {
       clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").show();
       clayConfig.getItemByMessageKey("CfgKeyUseCelsius").show();
+      clayConfig.getItemByMessageKey("CfgKeyAPIKey").show();
     } else {
       clayConfig.getItemByMessageKey("CfgKeyWeatherLocation").hide();
       clayConfig.getItemByMessageKey("CfgKeyUseCelsius").hide();
+      clayConfig.getItemByMessageKey("CfgKeyAPIKey").hide();
     }
   }
 

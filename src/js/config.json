@@ -45,6 +45,13 @@
         ]
       },
       {
+        "type": "input",
+        "messageKey": "CfgKeyAPIKey",
+        "label": "OpenWeatherMap API Key:",
+        "description": "<a href='https://home.openweathermap.org/users/sign_up'>Tap here to register for a key</a>",
+        "defaultValue": ""
+      },
+      {
         "type": "toggle",
         "messageKey": "CfgKeyUseCelsius",
         "label": "Use Celsius",

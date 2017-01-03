@@ -8,6 +8,7 @@ typedef enum {
   CfgKeyConditions,
   CfgKeyWeatherError,
   CfgKeyWeatherMode,
+  CfgKeyAPIKey,
   CfgKeyUseCelsius,
   CfgKeyWeatherLocation,
   CfgKeyLanguage,

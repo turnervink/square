@@ -33,6 +33,7 @@
       "CfgKeyConditions",
       "CfgKeyWeatherError",
       "CfgKeyWeatherMode",
+      "CfgKeyAPIKey",
       "CfgKeyUseCelsius",
       "CfgKeyWeatherLocation",
       "CfgKeyLanguage",

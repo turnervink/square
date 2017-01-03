@@ -10,6 +10,7 @@ var apiKey = require('./apikey');
 var lang;
 var location;
 var last_location;
+var user_api_key;
 
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
@@ -26,13 +27,15 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + user_api_key + '&lang=' + lang;
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + user_api_key + '&lang=' + lang;
   }
+
+  console.log(url);
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET',
@@ -142,6 +145,9 @@ Pebble.addEventListener('webviewclosed', function(e) {
   location = dict[messageKeys.CfgKeyWeatherLocation];
   console.log("Location is " + location);
 
+  user_api_key = dict[messageKeys.CfgKeyAPIKey];
+  console.log("User's API key is " + user_api_key);
+
   if (lang === "0") {
     lang = "en"
   } else if (lang === "1") {
@@ -156,6 +162,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
 
   localStorage.lang = lang;
   localStorage.location = location;
+  localStorage.user_api_key = user_api_key;
 
   // Send settings values to watch side
   Pebble.sendAppMessage(dict,
@@ -186,7 +193,9 @@ Pebble.addEventListener("ready", function(e) {
     location = '';
   }
 
-
+  if (localStorage.getItem("user_api_key") !== null) {
+    user_api_key = localStorage.user_api_key;
+  }
 
 	getWeather(); // Get weather on launch
 });
