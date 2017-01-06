@@ -26,12 +26,12 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22' + location + '%22)%20and%20u%3D"c"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c" &format=json';
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22' + Math.round(pos.coords.latitude) + '%2C%20' + Math.round(pos.coords.longitude) + '%22)%20and%20u%3D"c"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + pos.coords.latitude + ', ' + pos.coords.longitude + ')") and u="c" &format=json';
   }
 
   console.log("URL is " + url);
@@ -49,10 +49,10 @@ function locationSuccess(pos) {
           "CfgKeyWeatherError": "error",
         };
       } else {
-        var temperature = parseInt(item.condition.temp);
+        var temperature = parseInt((item.condition.temp * 1.8) + 32); // Convert from Celsius to Fahrenheit
         console.log("Temperature in Fahrenheit is " + temperature);
 
-        var temperaturec = Math.round((parseInt(item.condition.temp) - 32) / 1.8); // Convert from Kelvin to Celsius
+        var temperaturec = parseInt(item.condition.temp);
         console.log("Temperature in Celsius is " + temperaturec);
 
         // Conditions
