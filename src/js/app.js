@@ -3,7 +3,7 @@ var customClay = require('./custom-clay');
 var clayConfig = require('./config.json');
 var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
-var apiKey = require('./apikey');
+//var apiKey = require('./apikey');
 
 // ---------- Weather ---------- //
 
@@ -26,13 +26,15 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c" &format=json';
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + pos.coords.latitude + ', ' + pos.coords.longitude + ')") and u="c" &format=json';
   }
+
+  console.log("URL is " + url);
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET',
@@ -41,19 +43,25 @@ function locationSuccess(pos) {
 
       var json = JSON.parse(responseText); // Parse JSON response
 
-      if (!json.main) {
+      if (parseInt(json.query.count) == 0) {
+        console.log("No weather info returned from Yahoo");
+
         var dictionary = {
           "CfgKeyWeatherError": "error",
         };
       } else {
-        var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32); // Convert from Kelvin to Fahrenheit
+        var item = json.query.results.channel.item; // Drill down to current conditions in response
+
+        console.log("City in response is " + json.query.results.channel.location.city);
+
+        var temperature = parseInt((item.condition.temp * 1.8) + 32); // Convert from Celsius to Fahrenheit
         console.log("Temperature in Fahrenheit is " + temperature);
 
-        var temperaturec = Math.round(json.main.temp - 273.15); // Convert from Kelvin to Celsius
+        var temperaturec = parseInt(item.condition.temp);
         console.log("Temperature in Celsius is " + temperaturec);
 
         // Conditions
-        var conditions = json.weather[0].description;
+        var conditions = item.condition.text;
         console.log("Conditions are " + conditions);
 
         // Assemble weather info into dictionary
