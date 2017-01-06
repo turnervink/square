@@ -26,12 +26,12 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c" &format=json';
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c" &format=json';
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + pos.coords.latitude + ', ' + pos.coords.longitude + ')") and u="c" &format=json';
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + pos.coords.latitude + ', ' + pos.coords.longitude + ')") and u="c" &format=json';
   }
 
   console.log("URL is " + url);
@@ -42,13 +42,18 @@ function locationSuccess(pos) {
       console.log("Parsing JSON");
 
       var json = JSON.parse(responseText); // Parse JSON response
-      var item = json.query.results.channel.item; // Drill down to current conditions in response
 
-      if (!json.query.results) {
+      if (parseInt(json.query.count) == 0) {
+        console.log("No weather info returned from Yahoo");
+
         var dictionary = {
           "CfgKeyWeatherError": "error",
         };
       } else {
+        var item = json.query.results.channel.item; // Drill down to current conditions in response
+
+        console.log("City in response is " + json.query.results.channel.location.city);
+
         var temperature = parseInt((item.condition.temp * 1.8) + 32); // Convert from Celsius to Fahrenheit
         console.log("Temperature in Fahrenheit is " + temperature);
 
