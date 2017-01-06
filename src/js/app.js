@@ -3,7 +3,7 @@ var customClay = require('./custom-clay');
 var clayConfig = require('./config.json');
 var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
-var apiKey = require('./apikey');
+//var apiKey = require('./apikey');
 
 // ---------- Weather ---------- //
 
@@ -26,13 +26,15 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22' + location + '%22)%20and%20u%3D"c"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20item.condition%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22' + Math.round(pos.coords.latitude) + '%2C%20' + Math.round(pos.coords.longitude) + '%22)%20and%20u%3D"c"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
   }
+
+  console.log("URL is " + url);
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET',
@@ -40,20 +42,21 @@ function locationSuccess(pos) {
       console.log("Parsing JSON");
 
       var json = JSON.parse(responseText); // Parse JSON response
+      var item = json.query.results.channel.item; // Drill down to current conditions in response
 
-      if (!json.main) {
+      if (!json.query.results) {
         var dictionary = {
           "CfgKeyWeatherError": "error",
         };
       } else {
-        var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32); // Convert from Kelvin to Fahrenheit
+        var temperature = parseInt(item.condition.temp);
         console.log("Temperature in Fahrenheit is " + temperature);
 
-        var temperaturec = Math.round(json.main.temp - 273.15); // Convert from Kelvin to Celsius
+        var temperaturec = Math.round((parseInt(item.condition.temp) - 32) / 1.8); // Convert from Kelvin to Celsius
         console.log("Temperature in Celsius is " + temperaturec);
 
         // Conditions
-        var conditions = json.weather[0].description;
+        var conditions = item.condition.text;
         console.log("Conditions are " + conditions);
 
         // Assemble weather info into dictionary
