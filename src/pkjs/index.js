@@ -3,7 +3,7 @@ var customClay = require('./custom-clay');
 var clayConfig = require('./config.json');
 var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
-var apiKey = require('./apikey');
+//var apiKey = require('./apikey');
 
 // ---------- Weather ---------- //
 
@@ -26,12 +26,12 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + '26572bd92483d703bc3cf2e160e95cd1' + '&lang=' + lang;
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getKey() + '&lang=' + lang;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + '26572bd92483d703bc3cf2e160e95cd1' + '&lang=' + lang;
   }
 
   // Send request to OpenWeatherMap

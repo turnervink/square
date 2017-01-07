@@ -7,6 +7,14 @@
 #include "bluetooth/bluetooth.h"
 #include "colours.h"
 
+void get_launch_minute() {
+  time_t temp = time(NULL);
+  struct tm *tick_time = localtime(&temp);
+
+  launch_minute = tick_time->tm_min;
+  APP_LOG(APP_LOG_LEVEL_INFO, "Launch minute is %d", launch_minute);
+}
+
 static const uint32_t const segments[] = {200, 100, 200, 100, 200};
 VibePattern hour_chime = {
   .durations = segments,
@@ -20,12 +28,10 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
     if (hourly_vibe == 1 && quiet_time_is_active() == false) {
       vibes_enqueue_custom_pattern(hour_chime);
     }
-
-    update_weather();
   }
 
-  if (tick_time->tm_min % 30 == 0 && tick_time->tm_sec == 0) {
-
+  if (tick_time->tm_min == launch_minute && tick_time->tm_sec == 0) {
+    update_weather();
   }
 
   if (tick_time->tm_hour == night_start_hour && tick_time->tm_min == 0) {
@@ -47,6 +53,7 @@ static void init() {
   init_messaging();
 
   main_window_push();
+  get_launch_minute();
 }
 
 static void deinit() {
