@@ -34,6 +34,8 @@ function locationSuccess(pos) {
     var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getAPIKey() + '&lang=' + lang;
   }
 
+  console.log("URL is " + url);
+
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET',
     function(responseText) {
@@ -41,19 +43,25 @@ function locationSuccess(pos) {
 
       var json = JSON.parse(responseText); // Parse JSON response
 
-      if (!json.main) {
+      if (parseInt(json.query.count) == 0) {
+        console.log("No weather info returned from Yahoo");
+
         var dictionary = {
           "CfgKeyWeatherError": "error",
         };
       } else {
-        var temperature = Math.round(((json.main.temp - 273.15) * 1.8) + 32); // Convert from Kelvin to Fahrenheit
+        var item = json.query.results.channel.item; // Drill down to current conditions in response
+
+        console.log("City in response is " + json.query.results.channel.location.city);
+
+        var temperature = parseInt((item.condition.temp * 1.8) + 32); // Convert from Celsius to Fahrenheit
         console.log("Temperature in Fahrenheit is " + temperature);
 
-        var temperaturec = Math.round(json.main.temp - 273.15); // Convert from Kelvin to Celsius
+        var temperaturec = parseInt(item.condition.temp);
         console.log("Temperature in Celsius is " + temperaturec);
 
         // Conditions
-        var conditions = json.weather[0].description;
+        var conditions = item.condition.text;
         console.log("Conditions are " + conditions);
 
         // Assemble weather info into dictionary
