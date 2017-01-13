@@ -10,5 +10,5 @@ dist.zip
 node_modules/
 
 # Skip apikey.js
-src/js/apikey.js
+src/pkjs/apikey.js
 
