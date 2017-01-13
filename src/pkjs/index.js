@@ -3,7 +3,7 @@ var customClay = require('./custom-clay');
 var clayConfig = require('./config.json');
 var clay = new Clay(clayConfig, customClay, {autoHandleEvents: false});
 
-//var apiKey = require('./apikey');
+var apiKey = require('./apikey');
 
 // ---------- Weather ---------- //
 
@@ -26,12 +26,12 @@ function locationSuccess(pos) {
   if (location != '') {
     console.log("Fetching weather with manual location")
     console.log("Location is " + location);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + location + '") and u="c" &format=json';
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + apiKey.getAPIKey() + '&lang=' + lang;
   } else {
     console.log("Fetching weather with GPS location");
     console.log("Lat is " + pos.coords.latitude);
     console.log("Lon is " + pos.coords.longitude);
-    var url = 'https://query.yahooapis.com/v1/public/yql?q=' + 'select item.condition, location.city from weather.forecast where woeid in (select woeid from geo.places(1) where text="(' + pos.coords.latitude + ', ' + pos.coords.longitude + ')") and u="c" &format=json';
+    var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + apiKey.getAPIKey() + '&lang=' + lang;
   }
 
   console.log("URL is " + url);
