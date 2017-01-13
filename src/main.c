@@ -32,7 +32,6 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
   if (tick_time->tm_min == launch_minute && tick_time->tm_sec == 0) { // Update weather on launch_minute of the hour
     update_weather();
-    vibes_long_pulse(); // For testing
   }
 
   if (tick_time->tm_hour == night_start_hour && tick_time->tm_min == 0) {
