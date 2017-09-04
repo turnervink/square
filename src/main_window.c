@@ -35,7 +35,7 @@ void update_time() {
 
   static char time_buffer[] = "00:00:00";
   static char date_num_buffer[] = "DD";
-  static char full_date_buffer[] = "HÉT DD MMM";
+  static char full_date_buffer[] = "ÉÉÉ DD ÉÉÉ";
 
   #ifdef SCREENSHOT_MODE
     if (show_seconds == 1) {
